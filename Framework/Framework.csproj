@@ -43,6 +43,7 @@
     <Compile Include="Generality\Bases\Map.cs" />
     <Compile Include="Generality\Bases\ParticleSystem\Emitter.cs" />
     <Compile Include="Generality\Bases\ParticleSystem\Particle.cs" />
+    <Compile Include="Generality\Bases\Playẻ.cs" />
     <Compile Include="Generality\ColisionDetection\Collision.cs" />
     <Compile Include="Generality\OffSets\Constants.cs" />
     <Compile Include="Generality\Managers\GameManager.cs" />
