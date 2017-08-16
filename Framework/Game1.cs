@@ -1,5 +1,6 @@
 ﻿using Framework.Generality;
 using Framework.Generality.Bases;
+using Framework.Generality.Enemy;
 using Framework.Generality.InputControl;
 using Framework.Generality.OffSets;
 using Framework.Generality.Sounds;
@@ -16,6 +17,7 @@ namespace Framework
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Enemy monster;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -23,8 +25,7 @@ namespace Framework
             IsMouseVisible = true;
             graphics.PreferredBackBufferWidth = Constants.VIEWPORT_WIDTH;
             graphics.PreferredBackBufferHeight = Constants.VIEWPORT_HEIGHT;
-            int i = 0;
-            i++;
+            monster = new Enemy();
             
             
         }
@@ -49,6 +50,7 @@ namespace Framework
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            monster.LoadContents(Content);
           
         }
 
@@ -69,7 +71,8 @@ namespace Framework
         protected override void Update(GameTime gameTime)
         {
             Input.Update();
-          
+
+            monster.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             base.Update(gameTime);
         }
 
@@ -81,7 +84,7 @@ namespace Framework
         {
             GraphicsDevice.Clear(Color.Green);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-            
+            monster.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }
