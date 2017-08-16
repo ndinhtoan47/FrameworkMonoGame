@@ -16,6 +16,7 @@ namespace Framework
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Map map1;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -34,6 +35,8 @@ namespace Framework
         /// </summary>
         protected override void Initialize()
         {
+            map1 = new Map();
+            map1.Init(map1.LoadFileMap(@"../../../../Maps/map1.txt"),64);
             
             base.Initialize();
         }
@@ -46,7 +49,7 @@ namespace Framework
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-          
+            map1.LoadContents(Content);
         }
 
         /// <summary>
@@ -78,7 +81,7 @@ namespace Framework
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-            
+            map1.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }
