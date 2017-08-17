@@ -45,6 +45,8 @@
     <Compile Include="Generality\Bases\ParticleSystem\Particle.cs" />
     <Compile Include="Generality\Bases\SpriteHelpers.cs" />
     <Compile Include="Generality\ColisionDetection\Collision.cs" />
+    <Compile Include="Generality\Enemy\Enemy.cs" />
+    <Compile Include="Generality\Enemy\EnemyControl.cs" />
     <Compile Include="Generality\OffSets\Constants.cs" />
     <Compile Include="Generality\Managers\GameManager.cs" />
     <Compile Include="Generality\InputControl\Input.cs" />
