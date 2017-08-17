@@ -123,11 +123,8 @@ namespace Framework.MainTank
 
         public void Death()
         {
+            
         }
 
-        public void Restart()
-        {
-
-        }
     }
 }
