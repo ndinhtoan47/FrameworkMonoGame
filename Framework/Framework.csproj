@@ -57,6 +57,8 @@
     <Compile Include="Generality\Managers\SceneManager.cs" />
     <Compile Include="Generality\Sounds\SEffect.cs" />
     <Compile Include="Generality\Bases\Tile.cs" />
+    <Compile Include="MainTank\Bullet.cs" />
+    <Compile Include="MainTank\Tank.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
