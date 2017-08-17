@@ -124,7 +124,7 @@ namespace Framework.Generality.Enemy
             {
                 TotalRollDelaytime += deltaTime;
             }
-            if (position.X >= 0 && position.X <= 800 && position.Y >= 0 && position.Y <= 480)
+            if (position.X >= 16 && position.X <= 800-16 && position.Y >= 16 && position.Y <= 480-16)
             {
                 if (Up == true)
                 {
@@ -145,8 +145,8 @@ namespace Framework.Generality.Enemy
                     position.X += 1 * delayTime;
                 }
             }
-            if (position.X <= 0)
-                position.X = 0;
+            if (position.X <= 16)
+                position.X = 16;
         }
 
         public override void Update(float deltaTime)
