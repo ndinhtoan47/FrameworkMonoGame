@@ -41,11 +41,11 @@ namespace Framework.Generality.Bases
                 i.LoadContents(contents);
             }
         }
-        public void Update(float deltaTime)
+        public void Update(float deltaTime, ContentManager contents)
         {
             foreach (Tile i in _tiles)
             {
-                i.Update(deltaTime);
+                i.Update(deltaTime, contents);
             }
         }
         public void Draw(SpriteBatch sp)

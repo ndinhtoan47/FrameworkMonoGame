@@ -49,9 +49,9 @@ namespace Framework.Generality
             }
             base.Draw(sp);
         }
-        public override void Update(float deltaTime)
+        public override void Update(float deltaTime, ContentManager contents)
         {
-            base.Update(deltaTime);
+            base.Update(deltaTime, contents);
         }
     }
 }

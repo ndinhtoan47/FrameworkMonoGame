@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+using Framework.MainTank;
+
 namespace Framework
 {
     /// <summary>
@@ -16,6 +18,9 @@ namespace Framework
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        Tank newTank;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -23,6 +28,8 @@ namespace Framework
             IsMouseVisible = true;
             graphics.PreferredBackBufferWidth = Constants.VIEWPORT_WIDTH;
             graphics.PreferredBackBufferHeight = Constants.VIEWPORT_HEIGHT;
+
+            newTank = new Tank();
             
         }
 
@@ -46,6 +53,8 @@ namespace Framework
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            newTank.LoadContents(Content);
+            
           
         }
 
@@ -66,6 +75,7 @@ namespace Framework
         protected override void Update(GameTime gameTime)
         {
             Input.Update();
+            newTank.Update(0, Content);
           
             base.Update(gameTime);
         }
@@ -78,7 +88,7 @@ namespace Framework
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-            
+            newTank.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }

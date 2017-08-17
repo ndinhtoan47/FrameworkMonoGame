@@ -29,7 +29,7 @@ namespace Framework.Generality.Bases
         public virtual bool Init() { return true; }
         public virtual void LoadContents(ContentManager contents) { }
         public virtual void Draw(SpriteBatch sp) { }
-        public virtual void Update(float deltaTime) { }
+        public virtual void Update(float deltaTime, ContentManager contents) { }
         
         // properties
         public Vector2 POSITION
