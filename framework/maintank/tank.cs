@@ -46,7 +46,7 @@ namespace Framework.MainTank
 
         public override void LoadContents(ContentManager contents)
         {
-            tankImage = contents.Load<Texture2D>("tankdemo");
+            tankImage = contents.Load<Texture2D>("tank");
             tankRec = new Rectangle((int)tankPosition.X, (int)tankPosition.Y, tankImage.Width, tankImage.Height);
             //tankPosition = new Vector2(tankImage.Width / 2f, tankImage.Height / 2f);   
         }
@@ -57,9 +57,9 @@ namespace Framework.MainTank
                 bullet.Draw(sp);
             sp.Draw(tankImage, tankPosition, null, Color.White, rotation, _origin, 1, SpriteEffects.None, 0);
         }
-        public override void Update(float deltaTime, ContentManager contents)
+        public override void Update(float deltaTime)
         {
-            ControllerUpdate(deltaTime, contents);
+            ControllerUpdate(deltaTime, Game1._content);
         }
 
         public void ControllerUpdate(float deltaTime, ContentManager contents)
@@ -123,7 +123,6 @@ namespace Framework.MainTank
 
         public void Death()
         {
-            int a = 0;
         }
 
         public void Restart()

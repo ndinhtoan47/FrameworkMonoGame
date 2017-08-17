@@ -1,5 +1,6 @@
 ﻿using Framework.Generality;
 using Framework.Generality.Bases;
+using Framework.Generality.Enemy;
 using Framework.Generality.InputControl;
 using Framework.Generality.OffSets;
 using Framework.Generality.Sounds;
@@ -8,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 using Framework.MainTank;
+using Microsoft.Xna.Framework.Content;
 
 namespace Framework
 {
@@ -18,9 +20,10 @@ namespace Framework
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
         Tank newTank;
-
+        Enemy monster;
+        Map map1;
+        static public ContentManager _content;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -28,8 +31,9 @@ namespace Framework
             IsMouseVisible = true;
             graphics.PreferredBackBufferWidth = Constants.VIEWPORT_WIDTH;
             graphics.PreferredBackBufferHeight = Constants.VIEWPORT_HEIGHT;
-
             newTank = new Tank();
+            monster = new Enemy();
+            
             
         }
 
@@ -41,7 +45,13 @@ namespace Framework
         /// </summary>
         protected override void Initialize()
         {
-            
+            _content = Content;
+            map1 = new Map();
+            //map1.Init(map1.LoadFileMap(@"../../../../Maps/map1.txt"),64);
+            map1.Init(new int[,] {  {1,1,2,3 },
+                                    {2,2,4,2 },
+                                    {2,3,1,0 }, }, 64);
+
             base.Initialize();
         }
 
@@ -54,8 +64,8 @@ namespace Framework
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             newTank.LoadContents(Content);
-            
-          
+            monster.LoadContents(Content);
+            map1.LoadContents(Content);
         }
 
         /// <summary>
@@ -75,8 +85,9 @@ namespace Framework
         protected override void Update(GameTime gameTime)
         {
             Input.Update();
-            newTank.Update(0, Content);
-          
+            newTank.Update(0);
+
+            monster.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             base.Update(gameTime);
         }
 
@@ -86,9 +97,11 @@ namespace Framework
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Green);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             newTank.Draw(spriteBatch);
+            monster.Draw(spriteBatch);
+            map1.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }
