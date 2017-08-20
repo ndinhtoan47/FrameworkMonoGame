@@ -25,7 +25,7 @@ namespace Framework.MainTank
         public float rotation;
         public Vector2 _origin;
         public float rotationVelocity = 3f;
-        public float linearVelocity = 3f;
+        public float linearVelocity = 1.5f;
 
 
         public List<Bullet> bullets = new List<Bullet>();
@@ -46,7 +46,7 @@ namespace Framework.MainTank
 
         public override void LoadContents(ContentManager contents)
         {
-            tankImage = contents.Load<Texture2D>("tank");
+            tankImage = contents.Load<Texture2D>("_tank");
             tankRec = new Rectangle((int)tankPosition.X, (int)tankPosition.Y, tankImage.Width, tankImage.Height);
             //tankPosition = new Vector2(tankImage.Width / 2f, tankImage.Height / 2f);   
         }
@@ -64,21 +64,33 @@ namespace Framework.MainTank
 
         public void ControllerUpdate(float deltaTime, ContentManager contents)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
-            {
-                rotation -= MathHelper.ToRadians(rotationVelocity);
-                
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.D))
-                rotation += MathHelper.ToRadians(rotationVelocity);
-
             var direction = new Vector2((float)Math.Cos(MathHelper.ToRadians(90) - rotation), -(float)Math.Sin(MathHelper.ToRadians(90) - rotation));
 
-            if (Keyboard.GetState().IsKeyDown(Keys.W))
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            {
+                //rotation -= MathHelper.ToRadians(rotationVelocity);
+                rotation = 4.71f;
                 tankPosition += direction * linearVelocity;
-            if (Keyboard.GetState().IsKeyDown(Keys.S))
-                tankPosition -= direction * linearVelocity;
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.D)) 
+            {
+                //rotation += MathHelper.ToRadians(rotationVelocity);
+                rotation = 1.59f;
+                tankPosition += direction * linearVelocity;
+            }
 
+
+
+            if (Keyboard.GetState().IsKeyDown(Keys.W))
+            {
+                tankPosition += direction * linearVelocity;
+                rotation = 0f;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.S))
+            {
+                tankPosition += direction * linearVelocity;
+                rotation = 3.15f;
+            }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space) && preKey.IsKeyUp(Keys.Space))
                 Shoot(contents);
@@ -119,6 +131,10 @@ namespace Framework.MainTank
 
             if (bullets.Count() < 30)
                 bullets.Add(nBullet);
+        }
+        public Vector2 bulletVelocity()
+        {
+            return nBullet.velocity;
         }
 
         public void Death()
