@@ -44,7 +44,7 @@ namespace Framework.Generality.Bases
                 i.LoadContents(contents);
             }
         }
-        public void Update(float deltaTime, ContentManager contents)
+        public void Update(float deltaTime)
         {
             foreach (Tile i in _tiles)
             {
