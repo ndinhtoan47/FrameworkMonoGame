@@ -17,7 +17,7 @@ namespace Framework.Generality.Bases.ParticleSystem
         private int _fade;
         private float _scale;
         private int _startOpacity;
-
+        private Emitter.EmitterStruct _emiterStr;
         // shape process
         private int _minX;
         private int _maxX;
@@ -28,6 +28,7 @@ namespace Framework.Generality.Bases.ParticleSystem
 
         public Particle(Emitter.EmitterStruct emiterStruct,Texture2D _sprite)
         {
+            #region Type box init 
             if (emiterStruct._shapeStruct._shape == Emitter.Shape.Box)
             {
                 _minX = emiterStruct._shapeStruct._minX;
@@ -36,6 +37,8 @@ namespace Framework.Generality.Bases.ParticleSystem
                 _maxY = emiterStruct._shapeStruct._maxY;
                 _radius = 0;
             }
+            #endregion
+            #region Type edge init
             if (emiterStruct._shapeStruct._shape == Emitter.Shape.Edge)
             {
                 _minX = emiterStruct._shapeStruct._minX;
@@ -44,6 +47,8 @@ namespace Framework.Generality.Bases.ParticleSystem
                 _maxY = 0;
                 _radius = 0;
             }
+            #endregion
+            #region Type circle init
             if (emiterStruct._shapeStruct._shape == Emitter.Shape.Circle)
             {
                 _minX = 0;
@@ -51,6 +56,24 @@ namespace Framework.Generality.Bases.ParticleSystem
                 _maxX = 0;
                 _maxY = 0;
                 _radius = emiterStruct._shapeStruct._radius;
+            }
+            #endregion
+            _emiterStr = emiterStruct;
+        }
+
+        public void Update(float deltaTime)
+        {
+            if(_emiterStr._shapeStruct._shape == Emitter.Shape.Box)
+            {
+
+            }
+            if (_emiterStr._shapeStruct._shape == Emitter.Shape.Edge)
+            {
+
+            }
+            if (_emiterStr._shapeStruct._shape == Emitter.Shape.Circle)
+            {
+
             }
         }
     }

@@ -60,6 +60,7 @@ namespace Framework.MainTank
         public override void Update(float deltaTime)
         {
             ControllerUpdate(deltaTime, Game1._content);
+            _position = tankPosition;
         }
 
         public void ControllerUpdate(float deltaTime, ContentManager contents)
@@ -123,8 +124,11 @@ namespace Framework.MainTank
 
         public void Death()
         {
-            
         }
 
+        public void Restart()
+        {
+
+        }
     }
 }
