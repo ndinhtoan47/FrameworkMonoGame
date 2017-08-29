@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Input;
 using Framework.Generality.Bases;
 using Framework.Generality.InputControl;
 using Framework.Generality.ColisionDetection;
+using Framework.Generality.Enemy;
 
 namespace Framework.MainTank
 {
@@ -19,7 +20,8 @@ namespace Framework.MainTank
         protected Vector2 tankPosition;
         //protected Vector2 tankVelocity;
         protected ulong id;
-        protected Box2D box;
+        protected Box2D _boxTank;
+        protected Box2D _boxBullet;
         protected Texture2D tankImage;
         protected Rectangle tankRec;
 
@@ -36,6 +38,7 @@ namespace Framework.MainTank
 
         //Test
         Collision nCollision;
+        Enemy nEnemy;
         
         public Tank()
         {
@@ -43,17 +46,22 @@ namespace Framework.MainTank
             tankPosition = new Vector2(200, 250);
             tankRec = new Rectangle();
             nItem = new Item();
+
+            //Demo
             nCollision = new Collision();
+            nEnemy = new Enemy();
         }
 
         public override bool Init() { return true; }
 
         public override void LoadContents(ContentManager contents)
         {
-            tankImage = contents.Load<Texture2D>("_tank");
+            tankImage = contents.Load<Texture2D>("tank");
             tankRec = new Rectangle((int)tankPosition.X, (int)tankPosition.Y, tankImage.Width, tankImage.Height);
             nItem.LoadContent(contents);
-            //tankPosition = new Vector2(tankImage.Width / 2f, tankImage.Height / 2f);   
+            //tankPosition = new Vector2(tankImage.Width / 2f, tankImage.Height / 2f); 
+            //Demo
+            nEnemy.LoadContents(contents);
         }
         public override void Draw(SpriteBatch sp)
         {
@@ -62,12 +70,23 @@ namespace Framework.MainTank
                 bullet.Draw(sp);
             nItem.Draw(sp);
             sp.Draw(tankImage, tankPosition, null, Color.White, rotation, _origin, 1, SpriteEffects.None, 0);
+
+            //demo
+            if(_Collision())
+            {
+                nEnemy.Draw(sp);
+
+            }
         }
         public override void Update(float deltaTime)
         {
             ControllerUpdate(deltaTime, Game1._content);
             nItem.Update(deltaTime);
             Collision();
+            _position = tankPosition;
+
+            //demo
+            nEnemy.Update(deltaTime);
         }
 
         public void ControllerUpdate(float deltaTime, ContentManager contents)
@@ -133,10 +152,12 @@ namespace Framework.MainTank
 
         public void Shoot(ContentManager contents)
         {
-            nBullet = new Bullet(contents.Load<Texture2D>("bullet1"));
+            nBullet = new Bullet(contents.Load<Texture2D>("bullet"));
             nBullet.velocity = new Vector2((float)Math.Cos(MathHelper.ToRadians(90) - rotation), -(float)Math.Sin(MathHelper.ToRadians(90) - rotation)) * 5f; //+ tankVelocity;
             nBullet.position = tankPosition + nBullet.velocity * 5;
             nBullet.isVisible = true;
+
+            _boxBullet = new Box2D(nBullet.position.X, nBullet.position.Y, nBullet.velocity.X, nBullet.velocity.Y, nBullet.image.Width, nBullet.image.Height);
 
             if (bullets.Count() < 20)
                 bullets.Add(nBullet);
@@ -148,9 +169,20 @@ namespace Framework.MainTank
 
         public Box2D boxTank()
         {
-            return box = new Box2D(this.tankPosition.X, this.tankPosition.Y, this.linearVelocity, this.linearVelocity, this.tankImage.Width, this.tankImage.Height);
+            return _boxTank = new Box2D(this.tankPosition.X, this.tankPosition.Y, this.linearVelocity, this.linearVelocity, this.tankImage.Width, this.tankImage.Height);
+        }
+        public Box2D boxBullet()
+        {
+            return _boxBullet;
         }
         
+        //demo
+        public Box2D boxEnemy()
+        {
+            Box2D nBox = new Box2D();
+            nBox = new Box2D(nEnemy.POSITION.X, nEnemy.POSITION.Y, 0, 0, nEnemy.Sprite.Width, nEnemy.Sprite.Height);
+            return nBox;
+        }
 
         public void Collision()
         {
@@ -161,6 +193,20 @@ namespace Framework.MainTank
                 nItem.isVisible = false;
             }
         }
+        public bool _Collision()
+        {
+            bool _collision;
+            _collision = nCollision.Intersect(boxBullet(), boxEnemy());
+            if (_collision)
+            {
+                return true;
+            }
+            else return false;
+        }
 
+        public void Restart()
+        {
+
+        }
     }
 }

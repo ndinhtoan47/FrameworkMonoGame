@@ -13,7 +13,7 @@ namespace Framework.Generality.Enemy
 {
     class EnemyControl: Bases.Object
     {
-        protected Texture2D Sprite;
+        public Texture2D Sprite;
         protected Vector2 position;
         protected Rectangle derution;
         protected float Phase = 0;
@@ -74,7 +74,7 @@ namespace Framework.Generality.Enemy
 
         public override void LoadContents(ContentManager contents)
         {
-            Sprite = contents.Load<Texture2D>("tanktile");
+            Sprite = contents.Load<Texture2D>("TankTitle1");
             base.LoadContents(contents);
 
         }
