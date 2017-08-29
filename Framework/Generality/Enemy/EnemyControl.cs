@@ -74,7 +74,7 @@ namespace Framework.Generality.Enemy
 
         public override void LoadContents(ContentManager contents)
         {
-            Sprite = contents.Load<Texture2D>("TankTile1");
+            Sprite = contents.Load<Texture2D>("tanktile");
             base.LoadContents(contents);
 
         }

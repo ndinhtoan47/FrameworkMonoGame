@@ -62,6 +62,7 @@
     <Compile Include="Generality\Sounds\SEffect.cs" />
     <Compile Include="Generality\Bases\Tile.cs" />
     <Compile Include="MainTank\Bullet.cs" />
+    <Compile Include="MainTank\Item.cs" />
     <Compile Include="MainTank\Tank.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
