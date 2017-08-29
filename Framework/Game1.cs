@@ -85,7 +85,7 @@ namespace Framework
         protected override void Update(GameTime gameTime)
         {
             Input.Update();
-            newTank.Update(0);
+            newTank.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 
             monster.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             base.Update(gameTime);
