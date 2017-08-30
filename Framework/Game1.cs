@@ -23,6 +23,7 @@ namespace Framework
         Tank newTank;
         Enemy monster;
         Map map1;
+        GateControl GAte;
         static public ContentManager _content;
         public Game1()
         {
@@ -32,9 +33,9 @@ namespace Framework
             graphics.PreferredBackBufferWidth = Constants.VIEWPORT_WIDTH;
             graphics.PreferredBackBufferHeight = Constants.VIEWPORT_HEIGHT;
             newTank = new Tank();
-            monster = new Enemy();
-            
-            
+            monster = new Enemy(new Vector2(0,0));
+
+            GAte = new GateControl(Content);
         }
 
         /// <summary>
@@ -48,10 +49,10 @@ namespace Framework
             _content = Content;
             map1 = new Map();
             //map1.Init(map1.LoadFileMap(@"../../../../Maps/map1.txt"),64);
-            map1.Init(new int[,] {  {1,1,2,3 },
-                                    {2,2,4,2 },
-                                    {2,3,1,0 }, }, 64);
-
+            //map1.Init(new int[,] {  {1,1,2,3 },
+            //                        {2,2,4,2 },
+            //                        {2,3,1,0 }, }, 64);
+            GAte.Int();
             base.Initialize();
         }
 
@@ -66,6 +67,7 @@ namespace Framework
             newTank.LoadContents(Content);
             monster.LoadContents(Content);
             map1.LoadContents(Content);
+            GAte.Load(Content);
         }
 
         /// <summary>
@@ -86,7 +88,7 @@ namespace Framework
         {
             Input.Update();
             newTank.Update(0);
-
+            GAte.Updata((float)gameTime.ElapsedGameTime.TotalSeconds);
             monster.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             base.Update(gameTime);
         }
@@ -98,10 +100,11 @@ namespace Framework
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Green);
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+            spriteBatch.Begin();
             newTank.Draw(spriteBatch);
-            monster.Draw(spriteBatch);
+            GAte.Draw(spriteBatch);
             map1.Draw(spriteBatch);
+            monster.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }
