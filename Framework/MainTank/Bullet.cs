@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Framework.MainTank
 {
-    class Bullet
+    class Bullet : Object
     {
         public Texture2D image;
         //public float rotation;
@@ -35,6 +35,7 @@ namespace Framework.MainTank
             isVisible = false;
             //origin = new Vector2(image.Width / 2, image.Height / 2);
         }
+
 
         public void Draw(SpriteBatch sp)
         {

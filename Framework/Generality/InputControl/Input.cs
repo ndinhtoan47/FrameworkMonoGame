@@ -1,4 +1,5 @@
-﻿using Framework.Generality.OffSets;
+﻿using System;
+using Framework.Generality.OffSets;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -47,6 +48,12 @@ namespace Framework.Generality.InputControl
                     return true;
             return false;
         }
+
+        internal static bool Clicked(object constant)
+        {
+            throw new NotImplementedException();
+        }
+
         public static bool Clicked(byte button = 1)
         {
             if (button == Constants.MOUSEBUTTON_LEFT)
