@@ -64,7 +64,7 @@ namespace Framework.MainTank
 
         }
 
-        public void setRandomPosition()
+        public void setRandomPosition()  //Set Random Position Except Tilemap position
         {
             Random random = new Random();
             this.position.X = random.Next(10, 800);
@@ -84,5 +84,6 @@ namespace Framework.MainTank
             Box2D boxItem;
             return boxItem = new Box2D(this.position.X, this.position.Y, 0, 0, this.image.Width, this.image.Height);
         }
+
     }
 }

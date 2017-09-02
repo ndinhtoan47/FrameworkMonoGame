@@ -129,11 +129,9 @@ namespace Framework.Generality.Enemy
                 if (Up == true)
                 {
                     position.Y -= 1 * delayTime;
-
                 }
                 if (Down == true)
                 {
-
                     position.Y += 1 * delayTime;
                 }
                 if (Left == true)
@@ -150,27 +148,16 @@ namespace Framework.Generality.Enemy
         }
 
         public override void Update(float deltaTime)
-
         {
             origin.X =16;
             origin.Y = 16;
-
-
-
             this.UpdataMove(delayTime);
             this.UpdataPhase(deltaTime);
             base.Update(deltaTime);
         }
         public override void Draw(SpriteBatch sp)
         {
-
-
-
             sp.Draw(Sprite, position, derution, Color.Wheat, Angle, origin,1f, SpriteEffects.None, 0f);
-            
-
-
-           
             base.Draw(sp);
         }
 

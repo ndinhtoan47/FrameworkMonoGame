@@ -25,20 +25,22 @@ namespace Framework.MainTank
         protected Texture2D tankImage;
         protected Rectangle tankRec;
 
-        public float rotation;
-        public Vector2 _origin;
-        public float rotationVelocity = 3f;
-        public float linearVelocity = 1.5f;
+        protected float rotation;
+        protected Vector2 _origin;
+        protected float rotationVelocity = 3f;
+        protected float linearVelocity = 1.5f;
 
 
-        public List<Bullet> bullets = new List<Bullet>();
-        public Bullet nBullet;
-        public Item nItem;
+        protected List<Bullet> bullets = new List<Bullet>();
+        protected Bullet nBullet;
+        protected Item nItem;
         KeyboardState preKey;
 
+        protected bool powerUp;
         //Test
         Collision nCollision;
-        Enemy nEnemy;
+
+        //Enemy nEnemy;
         
         public Tank()
         {
@@ -49,10 +51,10 @@ namespace Framework.MainTank
 
             //Demo
             nCollision = new Collision();
-            nEnemy = new Enemy();
+            //nEnemy = new Enemy();
         }
 
-        public override bool Init() { return true; }
+        public override bool Init() { return base.Init(); }
 
         public override void LoadContents(ContentManager contents)
         {
@@ -61,7 +63,7 @@ namespace Framework.MainTank
             nItem.LoadContent(contents);
             //tankPosition = new Vector2(tankImage.Width / 2f, tankImage.Height / 2f); 
             //Demo
-            nEnemy.LoadContents(contents);
+            //nEnemy.LoadContents(contents);
         }
         public override void Draw(SpriteBatch sp)
         {
@@ -72,11 +74,11 @@ namespace Framework.MainTank
             sp.Draw(tankImage, tankPosition, null, Color.White, rotation, _origin, 1, SpriteEffects.None, 0);
 
             //demo
-            if(_Collision())
-            {
-                nEnemy.Draw(sp);
+            //if (_Collision() == false) 
+            //{
+            //    nEnemy.Draw(sp);
 
-            }
+            //}
         }
         public override void Update(float deltaTime)
         {
@@ -84,9 +86,8 @@ namespace Framework.MainTank
             nItem.Update(deltaTime);
             Collision();
             _position = tankPosition;
-
             //demo
-            nEnemy.Update(deltaTime);
+            //nEnemy.Update(deltaTime);
         }
 
         public void ControllerUpdate(float deltaTime, ContentManager contents)
@@ -177,12 +178,12 @@ namespace Framework.MainTank
         }
         
         //demo
-        public Box2D boxEnemy()
-        {
-            Box2D nBox = new Box2D();
-            nBox = new Box2D(nEnemy.POSITION.X, nEnemy.POSITION.Y, 0, 0, nEnemy.Sprite.Width, nEnemy.Sprite.Height);
-            return nBox;
-        }
+        //public Box2D boxEnemy()
+        //{
+        //    Box2D nBox = new Box2D();
+        //    nBox = new Box2D(nEnemy.POSITION.X, nEnemy.POSITION.Y, 0, 0, nEnemy.Sprite.Width, nEnemy.Sprite.Height);
+        //    return nBox;
+        //}
 
         public void Collision()
         {
@@ -193,20 +194,7 @@ namespace Framework.MainTank
                 nItem.isVisible = false;
             }
         }
-        public bool _Collision()
-        {
-            bool _collision;
-            _collision = nCollision.Intersect(boxBullet(), boxEnemy());
-            if (_collision)
-            {
-                return true;
-            }
-            else return false;
-        }
+   
 
-        public void Restart()
-        {
-
-        }
     }
 }
