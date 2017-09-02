@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Input;
 using Framework.MainTank;
 using Framework.Generality.Bases.Camera2D;
 using Microsoft.Xna.Framework.Content;
+using Framework.Generality.Bases.Camera2D;
 
 namespace Framework
 {
@@ -24,7 +25,12 @@ namespace Framework
         Tank newTank;
         Camera cam;
         Enemy monster;
+<<<<<<< HEAD
         //Map map1;
+=======
+        Map map1;
+        Camera cam;
+>>>>>>> upstream/master
         static public ContentManager _content;
         public Game1()
         {
@@ -50,10 +56,17 @@ namespace Framework
             _content = Content;
             //map1 = new Map();
             //map1.Init(map1.LoadFileMap(@"../../../../Maps/map1.txt"),64);
+<<<<<<< HEAD
             /*map1.Init(new int[,] {  {1,1,2,3 },
                                     {2,2,4,2 },
                                     {2,3,1,0 }, }, 64);
                                     */
+=======
+            //map1.Init(new int[,] {  {1,1,2,3 },
+            //                        {2,2,4,2 },
+            //                        {2,3,1,0 }, }, 64);
+
+>>>>>>> upstream/master
             base.Initialize();
         }
 
@@ -95,7 +108,7 @@ namespace Framework
             cam.Update(elapsedGameTime, newTank.POSITION);
             //tank.Update(elapsedGameTime);
             newTank.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-
+            cam.Update((float)gameTime.ElapsedGameTime.TotalSeconds,newTank.POSITION);
             monster.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             base.Update(gameTime);
         }
@@ -107,7 +120,11 @@ namespace Framework
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Green);
+<<<<<<< HEAD
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, cam.GetTransfromMatrix());
+=======
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,null,null,null,null,cam.GetTransfromMatrix());
+>>>>>>> upstream/master
             newTank.Draw(spriteBatch);
             monster.Draw(spriteBatch);
             //map1.Draw(spriteBatch);
