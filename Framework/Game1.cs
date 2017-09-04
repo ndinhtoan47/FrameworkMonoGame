@@ -25,12 +25,8 @@ namespace Framework
         Tank newTank;
         Camera cam;
         Enemy monster;
-<<<<<<< HEAD
         //Map map1;
-=======
         Map map1;
-        Camera cam;
->>>>>>> upstream/master
         static public ContentManager _content;
         public Game1()
         {
@@ -56,17 +52,14 @@ namespace Framework
             _content = Content;
             //map1 = new Map();
             //map1.Init(map1.LoadFileMap(@"../../../../Maps/map1.txt"),64);
-<<<<<<< HEAD
             /*map1.Init(new int[,] {  {1,1,2,3 },
                                     {2,2,4,2 },
                                     {2,3,1,0 }, }, 64);
                                     */
-=======
             //map1.Init(new int[,] {  {1,1,2,3 },
             //                        {2,2,4,2 },
             //                        {2,3,1,0 }, }, 64);
 
->>>>>>> upstream/master
             base.Initialize();
         }
 
@@ -120,11 +113,7 @@ namespace Framework
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Green);
-<<<<<<< HEAD
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, cam.GetTransfromMatrix());
-=======
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,null,null,null,null,cam.GetTransfromMatrix());
->>>>>>> upstream/master
             newTank.Draw(spriteBatch);
             monster.Draw(spriteBatch);
             //map1.Draw(spriteBatch);

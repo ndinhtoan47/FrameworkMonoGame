@@ -60,7 +60,7 @@ namespace Framework.MainTank
         {
             tankImage = contents.Load<Texture2D>("tank");
             tankRec = new Rectangle((int)tankPosition.X, (int)tankPosition.Y, tankImage.Width, tankImage.Height);
-            nItem.LoadContent(contents);
+            nItem.LoadContents(contents);
             //tankPosition = new Vector2(tankImage.Width / 2f, tankImage.Height / 2f); 
             //Demo
             //nEnemy.LoadContents(contents);

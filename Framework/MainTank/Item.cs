@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,14 +24,14 @@ namespace Framework.MainTank
         public bool isVisible;
         public bool Collision;
 
-        public Item()
+        public Item() : base()
         {
             image = null;
             isVisible = false;
             setRandomPosition();
         }
 
-        public void LoadContent(ContentManager contents)
+        public override void LoadContents(ContentManager contents)
         {
             Random rd = new Random();
             int randomValue = rd.Next(0, 2);
@@ -43,7 +43,7 @@ namespace Framework.MainTank
                 image = contents.Load<Texture2D>("item2");
         }
 
-        public void Update(float deltaTime)
+        public override void Update(float deltaTime)
         {
             if (this.TotalIsVisibleTime >= this.timeIsVisible)
             {
@@ -70,8 +70,9 @@ namespace Framework.MainTank
             this.position.X = random.Next(10, 800);
             this.position.Y = random.Next(10, 400);
         }
+        
 
-        public void Draw(SpriteBatch sp)
+        public  override void Draw(SpriteBatch sp)
         {
             if (isVisible)
             {
