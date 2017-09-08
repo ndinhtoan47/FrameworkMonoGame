@@ -31,21 +31,22 @@ namespace Framework.Generality.Enemy
 
         public float velocity = 50;
         protected float Angle = 0;
-        protected bool Left, Right, Up, Down;
+        protected bool Left, Right, Up, Down, Begin;
         protected Vector2 origin;
         public List<EnemyBullet> Bull= new List<EnemyBullet>();
        
 
-        public EnemyControl(Vector2 point)
+        public EnemyControl(Vector2 point,Texture2D TankTex, Texture2D BullTex)
         {
-            Bullet = new EnemyBullet();
-
+            Bullet = new EnemyBullet(BullTex);
+            Sprite = TankTex;
             position =point;
             derution = new Rectangle(0,0,32,32);
             Up = false;
             Left = false;
             Right = false;
             Down = false;
+            Begin = false;
 
 
 
@@ -82,13 +83,7 @@ namespace Framework.Generality.Enemy
 
         }
 
-        public override void LoadContents(ContentManager contents)
-        {
-            Sprite = contents.Load<Texture2D>("TankTitle");
-            Bullet.LoadContents(contents);
-            base.LoadContents(contents);
-
-        }
+      
         public void UpdataMove(float deltaTime)
         {
             Bullet.Update(deltaTime);
@@ -174,7 +169,9 @@ namespace Framework.Generality.Enemy
             origin.X =16;
             origin.Y = 16;
 
-          
+          if(Begin== true)
+            { 
+}
 
             this.UpdataMove(deltaTime);
             this.UpdataPhase(deltaTime);
@@ -228,9 +225,7 @@ namespace Framework.Generality.Enemy
             foreach (EnemyBullet Bullet in Bull)
             {
                 Bullet.Draw(sp);
-
-
-            }
+           }
             sp.Draw(Sprite, position, derution, Color.Wheat, Angle, origin, 1f, SpriteEffects.None, 0f);
 
             base.Draw(sp);

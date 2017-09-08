@@ -13,7 +13,7 @@ namespace Framework.Generality.Enemy
 {
     class Enemy:EnemyControl
     {
-        public Enemy(Vector2 _point):base (_point)
+        public Enemy(Vector2 point, Texture2D TankTex, Texture2D BullTex) :base (point, TankTex, BullTex)
         {
 
         }

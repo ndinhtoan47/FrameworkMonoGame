@@ -42,14 +42,8 @@ namespace Framework.Generality.Enemy
             Open = false;
            
         }
-        public void Int()
-        {
-            Tank = new Enemy(poisiton);
-        }
-        public void Load(ContentManager _content)
-        {
-            Tank.LoadContents(_content);
-        }
+      
+    
         public void UpdataPhase(float DeltaTime)
         {
             if (totaledelaytiem > delaytime)
@@ -72,11 +66,11 @@ namespace Framework.Generality.Enemy
         }
         public void Updata(float DeltaTime)
         {
-           if(ManegerMonster.Count<30)
+            foreach (Enemy Monster in ManegerMonster)
             {
-                ManegerMonster.Add(Tank);
+                Monster.Update(DeltaTime);
             }
-            if (TotalAddTime > delapađTime)
+                if (TotalAddTime > delapađTime)
             {
 
                 Open = true;
@@ -86,7 +80,8 @@ namespace Framework.Generality.Enemy
                 int nextvalueY = r.Next(0, 550);
                 poisiton.X = nextValueX;
                 poisiton.Y = nextvalueY;
-              
+                ManegerMonster.Add(
+                   Tank= new Enemy( poisiton, content.Load<Texture2D>("TankTitle1"), content.Load<Texture2D>("Bullet3")));
                 DesRec.X = (int)poisiton.X + 24;
                 DesRec.Y = (int)poisiton.Y+24;
                 
@@ -104,16 +99,16 @@ namespace Framework.Generality.Enemy
                
 
             }
-          
-           
 
+
+            int i = ManegerMonster.Count;
 
         }
         public void Draw(SpriteBatch sp)
         {
             foreach (Enemy Monster in ManegerMonster)
             {
-                Tank.Draw(sp);
+                Monster.Draw(sp);
             }
                 Gatesprite = content.Load<Texture2D>("shape" + Seri);
             if (Open == true)

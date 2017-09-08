@@ -21,9 +21,9 @@ namespace Framework.Generality.Enemy
        public  Vector2 velocity ;
         public bool Invisible = true;
 
-        public EnemyBullet() 
+        public EnemyBullet(Texture2D texture ) 
         {
-           
+            BulletSprite = texture;
             Suorbull = new Rectangle(0, 0, 104, 103);
             RecBull = new Rectangle(0, 0, 10, 10);
 
@@ -34,11 +34,7 @@ namespace Framework.Generality.Enemy
         {
             return base.Init();
         }
-        public override void LoadContents(ContentManager contents)
-        {
-            BulletSprite = contents.Load<Texture2D>("Bullet3");
-            base.LoadContents(contents);
-        }
+    
       
         public override void Update(float deltaTime)
         {
