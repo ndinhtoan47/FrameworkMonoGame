@@ -1,45 +1,17 @@
-﻿using Framework.Generality.Bases;
+﻿
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Framework.Generality
+namespace Framework.Generality.Bases.Tiles
 {
-    public class Tile : Object
+    public class EmptyTile : Tile
     {
-        /// <summary>
-        /// 0: nothing
-        /// 1: wood box
-        /// 2: tree
-        /// 3: walk
-        /// 4: water
-        /// 5: metal box
-        /// 51: metal box is detroyed
-        /// 6: empty box
-        /// </summary>
-        protected int _tileId;
-        protected Texture2D _texture;
-        protected int _size;
-        protected int _hp;
+        public EmptyTile(int id,Vector2 position,int size)
+            :base(id,position,size)
+        {
 
-        public Tile(int id, Vector2 position, int size)
-            : base()
-        {
-            _tileId = id;
-            _position = position;
-            _texture = null;
-            _size = size;
-            _hp = 1;
-            Init();
-        }
-
-        public int GetTileId()
-        {
-            return _tileId;
-        }
-        public int GetHP()
-        {
-            return _hp;
         }
         public override bool Init()
         {
@@ -53,13 +25,13 @@ namespace Framework.Generality
         }
         public override void LoadContents(ContentManager contents)
         {
-            if (_tileId != 0)
+            if (_tileId != 0 && _tileId != 6)
                 _texture = contents.Load<Texture2D>(@"Tiles\" + _tileId.ToString());
             base.Init();
         }
         public override void Draw(SpriteBatch sp)
         {
-            if (_texture != null && _hp > 0)
+            if (_texture != null)
             {
                 Rectangle rect = new Rectangle((int)_box.x, (int)_box.y, _box.width, _box.height);
                 sp.Draw(_texture, rect, Color.White);
@@ -72,6 +44,6 @@ namespace Framework.Generality
             _box.y = _position.Y;
             base.Update(deltaTime);
         }
-        public virtual void ReceiveDamage() { }
+        public override void ReceiveDamage() { }
     }
 }

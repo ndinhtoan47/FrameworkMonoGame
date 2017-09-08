@@ -1,45 +1,17 @@
-﻿using Framework.Generality.Bases;
+﻿
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Framework.Generality
+namespace Framework.Generality.Bases.Tiles
 {
-    public class Tile : Object
+    public class MetalBox:Tile
     {
-        /// <summary>
-        /// 0: nothing
-        /// 1: wood box
-        /// 2: tree
-        /// 3: walk
-        /// 4: water
-        /// 5: metal box
-        /// 51: metal box is detroyed
-        /// 6: empty box
-        /// </summary>
-        protected int _tileId;
-        protected Texture2D _texture;
-        protected int _size;
-        protected int _hp;
-
-        public Tile(int id, Vector2 position, int size)
-            : base()
+        private Texture2D _metalDestroyed;
+        public MetalBox(int id, Vector2 position, int size)
+            :base(id,position,size)
         {
-            _tileId = id;
-            _position = position;
-            _texture = null;
-            _size = size;
-            _hp = 1;
-            Init();
-        }
-
-        public int GetTileId()
-        {
-            return _tileId;
-        }
-        public int GetHP()
-        {
-            return _hp;
+            _metalDestroyed = null;
         }
         public override bool Init()
         {
@@ -49,20 +21,29 @@ namespace Framework.Generality
             _box.height = _size;
             _box.vx = 0;
             _box.vy = 0;
+            _hp = 5;
             return base.Init();
         }
         public override void LoadContents(ContentManager contents)
         {
-            if (_tileId != 0)
+            if (_tileId != 0 && _tileId != 6)
+            {
                 _texture = contents.Load<Texture2D>(@"Tiles\" + _tileId.ToString());
+                _metalDestroyed = contents.Load<Texture2D>(@"Tiles\" + _tileId.ToString() + "1");
+            }
             base.Init();
         }
         public override void Draw(SpriteBatch sp)
         {
-            if (_texture != null && _hp > 0)
+            if (_texture != null && _hp >= 2)
             {
                 Rectangle rect = new Rectangle((int)_box.x, (int)_box.y, _box.width, _box.height);
                 sp.Draw(_texture, rect, Color.White);
+            }
+            if(_metalDestroyed != null && _hp < 2 && _hp > 0)
+            {
+                Rectangle rect = new Rectangle((int)_box.x, (int)_box.y, _box.width, _box.height);
+                sp.Draw(_metalDestroyed, rect, Color.White);
             }
             base.Draw(sp);
         }
@@ -72,6 +53,9 @@ namespace Framework.Generality
             _box.y = _position.Y;
             base.Update(deltaTime);
         }
-        public virtual void ReceiveDamage() { }
+        public override void ReceiveDamage()
+        {
+            _hp--;
+        }
     }
 }

@@ -44,8 +44,11 @@
     <Compile Include="Generality\Bases\Map.cs" />
     <Compile Include="Generality\Bases\ParticleSystem\Emitter.cs" />
     <Compile Include="Generality\Bases\ParticleSystem\Particle.cs" />
+    <Compile Include="Generality\Bases\ParticleSystem\ParticleSystem.cs" />
     <Compile Include="Generality\Bases\ParticleSystem\RandomMaxMin.cs" />
     <Compile Include="Generality\Bases\SpriteHelpers.cs" />
+    <Compile Include="Generality\Bases\Tiles\EmptyTile.cs" />
+    <Compile Include="Generality\Bases\Tiles\MetalBox.cs" />
     <Compile Include="Generality\Bases\UI\Button.cs" />
     <Compile Include="Generality\Bases\UI\DemoButton.cs" />
     <Compile Include="Generality\ColisionDetection\Collision.cs" />

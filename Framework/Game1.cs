@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Input;
 using Framework.MainTank;
 using Microsoft.Xna.Framework.Content;
 using Framework.Generality.Bases.Camera2D;
+using Framework.Generality.Bases.ParticleSystem;
 
 namespace Framework
 {
@@ -25,6 +26,7 @@ namespace Framework
         Enemy monster;
         Map map1;
         Camera cam;
+        ParticleSystem par;
         static public ContentManager _content;
         public Game1()
         {
@@ -68,6 +70,16 @@ namespace Framework
             newTank.LoadContents(Content);
             monster.LoadContents(Content);
             //map1.LoadContents(Content);
+            par = new ParticleSystem(new System.Collections.Generic.List<Texture2D>() {
+            Content.Load<Texture2D>(@"shape53"),
+            Content.Load<Texture2D>(@"shape54"),
+            Content.Load<Texture2D>(@"shape55"),
+            Content.Load<Texture2D>(@"shape56"),
+            Content.Load<Texture2D>(@"shape57"),
+            Content.Load<Texture2D>(@"shape58"),
+            Content.Load<Texture2D>(@"shape59"),
+            Content.Load<Texture2D>(@"shape60"),
+            Content.Load<Texture2D>(@"shape61")});
         }
 
         /// <summary>
@@ -90,6 +102,11 @@ namespace Framework
             newTank.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             cam.Update((float)gameTime.ElapsedGameTime.TotalSeconds,newTank.POSITION);
             monster.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+            par.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+            if(Input.Clicked(Constants.MOUSEBUTTON_LEFT))
+            {
+                par.Add();
+            }
             base.Update(gameTime);
         }
 
@@ -104,6 +121,7 @@ namespace Framework
             newTank.Draw(spriteBatch);
             monster.Draw(spriteBatch);
             map1.Draw(spriteBatch);
+            par.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }
