@@ -26,7 +26,7 @@ namespace Framework.Generality.Bases.ParticleSystem
         private int _radius;
         private Vector2 _shapePosition;
 
-        public Particle(Emitter.EmitterStruct emiterStruct,Texture2D _sprite)
+        public Particle(Emitter.EmitterStruct emiterStruct, Texture2D sprite)
         {
             #region Type box init 
             if (emiterStruct._shapeStruct._shape == Emitter.Shape.Box)
@@ -56,24 +56,6 @@ namespace Framework.Generality.Bases.ParticleSystem
                 _maxX = 0;
                 _maxY = 0;
                 _radius = emiterStruct._shapeStruct._radius;
-            }
-            #endregion
-            _emiterStr = emiterStruct;
-        }
-
-        public void Update(float deltaTime)
-        {
-            if(_emiterStr._shapeStruct._shape == Emitter.Shape.Box)
-            {
-
-            }
-            if (_emiterStr._shapeStruct._shape == Emitter.Shape.Edge)
-            {
-
-            }
-            if (_emiterStr._shapeStruct._shape == Emitter.Shape.Circle)
-            {
-
             }
         }
     }
