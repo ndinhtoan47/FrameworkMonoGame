@@ -11,7 +11,6 @@ using Microsoft.Xna.Framework.Input;
 using Framework.MainTank;
 using Framework.Generality.Bases.Camera2D;
 using Microsoft.Xna.Framework.Content;
-using Framework.Generality.Bases.Camera2D;
 using Framework.Generality.Bases.ParticleSystem;
 
 namespace Framework
@@ -23,11 +22,6 @@ namespace Framework
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Tank newTank;
-        Enemy monster;
-        //Map map1;
-        Map map1;
-        Camera cam;
         static public ContentManager _content;
         public Game1()
         {
@@ -35,11 +29,7 @@ namespace Framework
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             graphics.PreferredBackBufferWidth = Constants.VIEWPORT_WIDTH;
-            graphics.PreferredBackBufferHeight = Constants.VIEWPORT_HEIGHT;
-            newTank = new Tank();
-            monster = new Enemy();
-            
-            
+            graphics.PreferredBackBufferHeight = Constants.VIEWPORT_HEIGHT;        
         }
 
         /// <summary>
@@ -51,12 +41,6 @@ namespace Framework
         protected override void Initialize()
         {
             _content = Content;
-            //map1 = new Map();
-            //map1.Init(map1.LoadFileMap(@"../../../../Maps/map1.txt"),64);
-            //map1.Init(new int[,] {  {1,1,2,3 },
-            //                        {2,2,4,2 },
-            //                        {2,3,1,0 }, }, 64);
-
             base.Initialize();
         }
 
@@ -69,9 +53,6 @@ namespace Framework
           
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            newTank.LoadContents(Content);
-            monster.LoadContents(Content);
-            map1.LoadContents(Content);
         }
 
         /// <summary>
@@ -91,9 +72,6 @@ namespace Framework
         protected override void Update(GameTime gameTime)
         {
             Input.Update();
-            newTank.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-            cam.Update((float)gameTime.ElapsedGameTime.TotalSeconds,newTank.POSITION);
-            monster.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             base.Update(gameTime);
         }
 
@@ -104,10 +82,7 @@ namespace Framework
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Green);
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,null,null,null,null,cam.GetTransfromMatrix());
-            newTank.Draw(spriteBatch);
-            monster.Draw(spriteBatch);
-            //map1.Draw(spriteBatch);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,null,null,null,null,null);
             spriteBatch.End();
             base.Draw(gameTime);
         }

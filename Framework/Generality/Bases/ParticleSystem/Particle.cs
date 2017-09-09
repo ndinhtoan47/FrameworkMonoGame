@@ -57,6 +57,7 @@ namespace Framework.Generality.Bases.ParticleSystem
                 _maxY = 0;
                 _radius = emiterStruct._shapeStruct._radius;
             }
+            #endregion
         }
     }
 }

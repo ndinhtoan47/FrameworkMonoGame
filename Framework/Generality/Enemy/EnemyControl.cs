@@ -33,6 +33,7 @@ namespace Framework.Generality.Enemy
         protected bool Left, Right, Up, Down, Begin;
         protected Vector2 origin;
         public List<EnemyBullet> Bull= new List<EnemyBullet>();
+        protected EnemyBullet Bullet;
        
 
         public EnemyControl(Vector2 point,Texture2D TankTex, Texture2D BullTex)
@@ -46,9 +47,6 @@ namespace Framework.Generality.Enemy
             Right = false;
             Down = false;
             Begin = false;
-
-
-
         }
         protected void UpdataPhase(float deltaTime)
         {
@@ -71,15 +69,10 @@ namespace Framework.Generality.Enemy
             }
             derution.X = (int)(Phase*32);
         }
-
-
         public override bool Init()
 
         {
-
-          
             return base.Init();
-
         }
 
         public override void LoadContents(ContentManager contents)
@@ -164,15 +157,12 @@ namespace Framework.Generality.Enemy
                 position.Y = 16;
             if (position.Y  > 600 - 16)
                 position.Y = 600 - 16;
-
         }
 
         public override void Update(float deltaTime)
         {
             origin.X =16;
             origin.Y = 16;
-
-
 
             this.UpdataMove(delayTime);
             this.UpdataPhase(deltaTime);
@@ -205,11 +195,9 @@ namespace Framework.Generality.Enemy
             {
                 TotalShootDelaytime += deltaTime;
             }
-
         }
         public void Shoot()
         {
-          
             Bullet.velocity = new Vector2((float)Math.Cos(MathHelper.ToRadians(90) - Angle), -(float)Math.Sin(MathHelper.ToRadians(90) - Angle)) * 5f;
             Bullet.BullPoisition.X = position.X - 5;
             Bullet.BullPoisition.Y = position.Y - 2;
@@ -218,14 +206,7 @@ namespace Framework.Generality.Enemy
         }
         public override void Draw(SpriteBatch sp)
         {
-
-
-
             sp.Draw(Sprite, position, derution, Color.Wheat, Angle, origin,1f, SpriteEffects.None, 0f);
-            
-
-
-           
             base.Draw(sp);
         }
 
