@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,14 +24,14 @@ namespace Framework.MainTank
         public bool isVisible;
         public bool Collision;
 
-        public Item()
+        public Item() : base()
         {
             image = null;
             isVisible = false;
             setRandomPosition();
         }
 
-        public void LoadContent(ContentManager contents)
+        public override void LoadContents(ContentManager contents)
         {
             Random rd = new Random();
             int randomValue = rd.Next(0, 2);
@@ -43,7 +43,7 @@ namespace Framework.MainTank
                 image = contents.Load<Texture2D>("item2");
         }
 
-        public void Update(float deltaTime)
+        public override void Update(float deltaTime)
         {
             if (this.TotalIsVisibleTime >= this.timeIsVisible)
             {
@@ -64,14 +64,15 @@ namespace Framework.MainTank
 
         }
 
-        public void setRandomPosition()
+        public void setRandomPosition()  //Set Random Position Except Tilemap position
         {
             Random random = new Random();
             this.position.X = random.Next(10, 800);
             this.position.Y = random.Next(10, 400);
         }
+        
 
-        public void Draw(SpriteBatch sp)
+        public  override void Draw(SpriteBatch sp)
         {
             if (isVisible)
             {
@@ -84,5 +85,6 @@ namespace Framework.MainTank
             Box2D boxItem;
             return boxItem = new Box2D(this.position.X, this.position.Y, 0, 0, this.image.Width, this.image.Height);
         }
+
     }
 }

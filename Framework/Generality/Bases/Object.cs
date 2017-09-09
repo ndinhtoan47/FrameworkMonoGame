@@ -10,7 +10,7 @@ namespace Framework.Generality.Bases
     {
         public enum Essential
         {
-            NONE,
+            NONE,MAINCHARACTER,ITEM,M_BULLET,
         }
         // local of the object
         protected Vector2 _position;

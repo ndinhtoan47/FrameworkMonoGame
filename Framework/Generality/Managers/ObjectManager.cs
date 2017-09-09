@@ -28,6 +28,12 @@ namespace Framework.Generality.Managers
         }
         public Object.Essential EssentalObject(Object obj)
         {
+            if (obj is MainTank.Tank)
+                return Object.Essential.MAINCHARACTER;
+            if (obj is MainTank.Item)
+                return Object.Essential.ITEM;
+            if (obj is MainTank.Bullet)
+                return Object.Essential.M_BULLET;
             return Object.Essential.NONE;
         }
         // properties
