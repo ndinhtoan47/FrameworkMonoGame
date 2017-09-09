@@ -26,7 +26,7 @@ namespace Framework.Generality.Bases.ParticleSystem
         private int _radius;
         private Vector2 _shapePosition;
 
-        public Particle(Emitter.EmitterStruct emiterStruct, Texture2D sprite)
+        public Particle(Emitter.EmitterStruct emiterStruct,Texture2D _sprite)
         {
             #region Type box init 
             if (emiterStruct._shapeStruct._shape == Emitter.Shape.Box)
@@ -59,17 +59,11 @@ namespace Framework.Generality.Bases.ParticleSystem
             }
             #endregion
             _emiterStr = emiterStruct;
-            _sprite = sprite;
-            // test
-            _speed = 0;
-            _rotationSpeed = 10;
-            _totalLifeTime = 0;
-            _fade = 255;
         }
 
         public void Update(float deltaTime)
         {
-            if (_emiterStr._shapeStruct._shape == Emitter.Shape.Box)
+            if(_emiterStr._shapeStruct._shape == Emitter.Shape.Box)
             {
 
             }
@@ -81,23 +75,6 @@ namespace Framework.Generality.Bases.ParticleSystem
             {
 
             }
-            _rotation += _rotationSpeed * deltaTime;
-            _position += new Vector2(_speed * deltaTime, _speed * deltaTime) * _direction;
-            _totalLifeTime += deltaTime;
-            _fade -= (int)(100 * deltaTime);
-        }
-        public void Draw(SpriteBatch sp)
-        {
-            sp.Draw(_sprite
-                , null
-                , new Rectangle((int)_position.X, (int)_position.Y, _sprite.Width, _sprite.Height)
-                , null
-                , new Vector2(_sprite.Width/2,_sprite.Height/2)
-                , _rotation
-                , new Vector2(_scale, _scale)
-                , new Color(_fade, _fade, _fade, _fade)
-                , SpriteEffects.None
-                , 0.0f);
         }
     }
 }

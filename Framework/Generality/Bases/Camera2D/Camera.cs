@@ -27,10 +27,9 @@ namespace Framework.Generality.Bases.Camera2D
             _followPos = Vector2.Zero;
         }
 
-        public void Update(float deltaTime, Vector2 follow)
+        public void Update(float deltaTime,Vector2 follow)
         {
-            if (_follow)
-                _followPos = follow;
+            _followPos = follow;      
         }
 
         public Matrix GetTransfromMatrix()
@@ -39,12 +38,8 @@ namespace Framework.Generality.Bases.Camera2D
             result = Matrix.CreateTranslation(new Vector3(-_followPos, 0))
                 * Matrix.CreateScale(_zoom)
                 * Matrix.CreateRotationZ(_rotation)
-                * Matrix.CreateTranslation(new Vector3(_viewportWidth / 2, _viewportHeight / 2, 0));
+                * Matrix.CreateTranslation(new Vector3(_viewportWidth/2,_viewportHeight/2, 0));
             return result;
-        }
-        public void Follow(bool value)
-        {
-            _follow = value;
         }
     }
 }

@@ -10,8 +10,6 @@ using Microsoft.Xna.Framework.Input;
 
 using Framework.MainTank;
 using Microsoft.Xna.Framework.Content;
-using Framework.Generality.Bases.Camera2D;
-using Framework.Generality.Bases.ParticleSystem;
 
 namespace Framework
 {
@@ -22,11 +20,9 @@ namespace Framework
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Tank newTank;
+        GateControl Gate;
         Enemy monster;
         Map map1;
-        Camera cam;
-        ParticleSystem par;
         static public ContentManager _content;
         public Game1()
         {
@@ -35,9 +31,9 @@ namespace Framework
             IsMouseVisible = true;
             graphics.PreferredBackBufferWidth = Constants.VIEWPORT_WIDTH;
             graphics.PreferredBackBufferHeight = Constants.VIEWPORT_HEIGHT;
-            newTank = new Tank();
-            monster = new Enemy();
-            cam = new Camera();
+            //newTank = new Tank();
+          
+            Gate = new GateControl(Content);
             
         }
 
@@ -50,12 +46,12 @@ namespace Framework
         protected override void Initialize()
         {
             _content = Content;
-            map1 = new Map();
-            //map1.Init(map1.LoadFileMap(@"../../../../Maps/map1.txt"),64);
+            //map1 = new Map();
+            ////map1.Init(map1.LoadFileMap(@"../../../../Maps/map1.txt"),64);
             //map1.Init(new int[,] {  {1,1,2,3 },
             //                        {2,2,4,2 },
             //                        {2,3,1,0 }, }, 64);
-
+          
             base.Initialize();
         }
 
@@ -65,21 +61,12 @@ namespace Framework
         /// </summary>
         protected override void LoadContent()
         {
+          
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            newTank.LoadContents(Content);
-            monster.LoadContents(Content);
+            //newTank.LoadContents(Content);
+          
             //map1.LoadContents(Content);
-            par = new ParticleSystem(new System.Collections.Generic.List<Texture2D>() {
-            Content.Load<Texture2D>(@"shape53"),
-            Content.Load<Texture2D>(@"shape54"),
-            Content.Load<Texture2D>(@"shape55"),
-            Content.Load<Texture2D>(@"shape56"),
-            Content.Load<Texture2D>(@"shape57"),
-            Content.Load<Texture2D>(@"shape58"),
-            Content.Load<Texture2D>(@"shape59"),
-            Content.Load<Texture2D>(@"shape60"),
-            Content.Load<Texture2D>(@"shape61")});
         }
 
         /// <summary>
@@ -99,14 +86,9 @@ namespace Framework
         protected override void Update(GameTime gameTime)
         {
             Input.Update();
-            newTank.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-            cam.Update((float)gameTime.ElapsedGameTime.TotalSeconds,newTank.POSITION);
-            monster.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-            par.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-            if(Input.Clicked(Constants.MOUSEBUTTON_LEFT))
-            {
-                par.Add();
-            }
+            //newTank.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+            Gate.Updata((float)gameTime.ElapsedGameTime.TotalSeconds);
+         
             base.Update(gameTime);
         }
 
@@ -117,11 +99,11 @@ namespace Framework
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Green);
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,null,null,null,null,cam.GetTransfromMatrix());
-            newTank.Draw(spriteBatch);
-            monster.Draw(spriteBatch);
-            map1.Draw(spriteBatch);
-            par.Draw(spriteBatch);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+            //newTank.Draw(spriteBatch);
+          
+            Gate.Draw(spriteBatch);
+            //map1.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }
