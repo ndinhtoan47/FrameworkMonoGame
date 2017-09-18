@@ -18,6 +18,10 @@ namespace Framework.Generality.Bases
             _isInit = false;
         }
 
+        public Scene()
+        {
+        }
+
         public virtual bool Init() 
         {
             _isInit = LoadContents();            
