@@ -11,7 +11,7 @@ namespace Framework.Generality
         /// 0: nothing
         /// 1: wood box
         /// 2: tree
-        /// 3: walk
+        /// 3: wall
         /// 4: water
         /// 5: metal box
         /// 51: metal box is detroyed
@@ -21,6 +21,7 @@ namespace Framework.Generality
         protected Texture2D _texture;
         protected int _size;
         protected int _hp;
+        protected Color _color;
 
         public Tile(int id, Vector2 position, int size)
             : base()
@@ -30,6 +31,7 @@ namespace Framework.Generality
             _texture = null;
             _size = size;
             _hp = 1;
+            _color = new Color(255, 255, 255, 255);
             Init();
         }
 
@@ -53,16 +55,14 @@ namespace Framework.Generality
         }
         public override void LoadContents(ContentManager contents)
         {
-            if (_tileId != 0)
-                _texture = contents.Load<Texture2D>(@"Tiles\" + _tileId.ToString());
-            base.Init();
+            base.LoadContents(contents);
         }
         public override void Draw(SpriteBatch sp)
         {
             if (_texture != null && _hp > 0)
             {
                 Rectangle rect = new Rectangle((int)_box.x, (int)_box.y, _box.width, _box.height);
-                sp.Draw(_texture, rect, Color.White);
+                sp.Draw(_texture, rect,_color);
             }
             base.Draw(sp);
         }

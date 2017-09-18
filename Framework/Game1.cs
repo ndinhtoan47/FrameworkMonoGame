@@ -12,6 +12,7 @@ using Framework.MainTank;
 using Framework.Generality.Bases.Camera2D;
 using Microsoft.Xna.Framework.Content;
 using Framework.Generality.Bases.ParticleSystem;
+using Framework.Generality.Particles;
 
 namespace Framework
 {
@@ -22,6 +23,12 @@ namespace Framework
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Texture2D backg;
+        Camera cam;
+        Map map;
+        FirePar firePar;
+        ExplosionPar explosionPar;
+        Texture2D tree;
         static public ContentManager _content;
         public Game1()
         {
@@ -29,7 +36,11 @@ namespace Framework
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             graphics.PreferredBackBufferWidth = Constants.VIEWPORT_WIDTH;
-            graphics.PreferredBackBufferHeight = Constants.VIEWPORT_HEIGHT;        
+            graphics.PreferredBackBufferHeight = Constants.VIEWPORT_HEIGHT;
+            cam = new Camera();
+            map = new Map();
+            firePar = new FirePar();
+            explosionPar = new ExplosionPar();
         }
 
         /// <summary>
@@ -41,6 +52,7 @@ namespace Framework
         protected override void Initialize()
         {
             _content = Content;
+            map.Init(map.LoadFileMap(@"../../../../Maps\map1.data"),20);
             base.Initialize();
         }
 
@@ -53,6 +65,11 @@ namespace Framework
           
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            map.LoadContents(Content);
+            backg = Content.Load<Texture2D>("backg");
+            firePar.LoadContents(Content);
+            explosionPar.LoadContents(Content);
+            tree = Content.Load<Texture2D>(@"Tiles\2");
         }
 
         /// <summary>
@@ -72,6 +89,15 @@ namespace Framework
         protected override void Update(GameTime gameTime)
         {
             Input.Update();
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //cam.Update(deltaTime,new Vector2(400,300));
+            //if (Input.Clicked(Constants.MOUSEBUTTON_LEFT))
+            //    cam.ZoomIn();
+            //if (Input.Clicked(Constants.MOUSEBUTTON_RIGHT))
+            //    cam.ZoomOut();
+            firePar.Update(deltaTime);
+            explosionPar.Update(deltaTime);
+            
             base.Update(gameTime);
         }
 
@@ -82,8 +108,15 @@ namespace Framework
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Green);
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,null,null,null,null,null);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,null,null,null,null,cam.GetTransfromMatrix());
+            //spriteBatch.Draw(backg, new Vector2(0, 0), Color.White);
+            //map.Draw(spriteBatch);
+            
+            spriteBatch.Draw(tree, new Rectangle(80, 70, 40, 40), new Color(100,100,100,255));
+            explosionPar.Draw(spriteBatch);
+            firePar.Draw(spriteBatch);
             spriteBatch.End();
+            
             base.Draw(gameTime);
         }
     }

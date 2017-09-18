@@ -1,5 +1,5 @@
 ﻿
-
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
@@ -7,44 +7,51 @@ namespace Framework.Generality.Bases.ParticleSystem
 {
     public class ParticleSystem
     {
+        protected RandomMaxMin _rd;
         protected List<Particle> _particles;
         protected List<Texture2D> _textures;
-
-        public ParticleSystem(List<Texture2D> textures)
+        protected bool _active;
+        protected int _minSize;
+        public ParticleSystem()
         {
+            _rd = new RandomMaxMin();
             _particles = new List<Particle>();
-            _textures = textures;
+            _textures = new List<Texture2D>();
+            _minSize = 1;
+            _active = true;
         }
 
-        public void Update(float deltaTime)
+        public virtual void Update(float deltaTime)
         {
-            foreach(Particle par in _particles)
+            for (int i = 0; i < _particles.Count; i++)
             {
-                par.Update(deltaTime);
+                _particles[i].Update(deltaTime);
+            }
+            RemoveOutTimeParticles();
+        }
+        public virtual void Draw(SpriteBatch sp)
+        {
+            for (int i = 0; i < _particles.Count; i++)
+            {
+                _particles[i].Draw(sp);
             }
         }
-        public void Draw(SpriteBatch sp)
+        public virtual void LoadContents(ContentManager contents) { }
+        public virtual void AddPar() { }
+        protected void RemoveOutTimeParticles()
         {
-            foreach (Particle par in _particles)
+            for (int i = 0; i < _particles.Count; i++)
             {
-                par.Draw(sp);
-            }
-       
-        }
-
-        public void Add()
-        {
-            if(_particles.Count <= 100)
-            {
-                int count = 0;
-                Emitter.EmitterStruct offSet = new Emitter.EmitterStruct();
-                RandomMaxMin rd = new RandomMaxMin();
-                while (count < 10)
+                if(_particles[i].TOTALTIMELIFE >= _particles[i].LIFETIME)
                 {
-                    _particles.Add(new Particle(offSet, _textures[rd.RandomInt(0, _textures.Count - 1)]));
-                    count++;
+                    _particles.Remove(_particles[i]);
+                    i--;
                 }
             }
+        }
+        public void SetActive(bool value)
+        {
+            _active = value;
         }
     }
 }

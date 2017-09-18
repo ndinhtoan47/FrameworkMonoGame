@@ -5,59 +5,80 @@ namespace Framework.Generality.Bases.ParticleSystem
 {
     public class Particle
     {
-        private Texture2D _sprite;
-        private Vector2 _position;
-        private float _speed;
-        private float _lifeTime;
-        private float _totalLifeTime;
-        private int _direction;
-        private float _rotation;
-        private float _rotationSpeed;
-        private Vector2 _center;
-        private int _fade;
-        private float _scale;
-        private int _startOpacity;
-        private Emitter.EmitterStruct _emiterStr;
-        // shape process
-        private int _minX;
-        private int _maxX;
-        private int _minY;
-        private int _maxY;
-        private int _radius;
-        private Vector2 _shapePosition;
+        protected Texture2D _sprite;
+        protected Vector2 _position;
+        protected float _speed;
+        protected float _lifeTime;
+        protected float _totalLifeTime;
+        protected int _direction;
+        protected float _rotation;
+        protected float _rotationSpeed;
+        protected Vector2 _center;
+        protected int _fade;
+        protected float _scale;
+        protected int _startOpacity;
+        protected int _minSize;
 
-        public Particle(Emitter.EmitterStruct emiterStruct, Texture2D sprite)
+        public Particle(Texture2D sprite, Vector2 position,
+                        float speed, float lifeTime, int direction,
+                        float rotation, float rotationSpeed,int minSize,
+                        float scale = 1.0f, int startOpacity = 255)
         {
-            #region Type box init 
-            if (emiterStruct._shapeStruct._shape == Emitter.Shape.Box)
-            {
-                _minX = emiterStruct._shapeStruct._minX;
-                _minY = emiterStruct._shapeStruct._minY;
-                _maxX = emiterStruct._shapeStruct._maxX;
-                _maxY = emiterStruct._shapeStruct._maxY;
-                _radius = 0;
-            }
-            #endregion
-            #region Type edge init
-            if (emiterStruct._shapeStruct._shape == Emitter.Shape.Edge)
-            {
-                _minX = emiterStruct._shapeStruct._minX;
-                _minY = 0;
-                _maxX = emiterStruct._shapeStruct._maxX;
-                _maxY = 0;
-                _radius = 0;
-            }
-            #endregion
-            #region Type circle init
-            if (emiterStruct._shapeStruct._shape == Emitter.Shape.Circle)
-            {
-                _minX = 0;
-                _minY = 0;
-                _maxX = 0;
-                _maxY = 0;
-                _radius = emiterStruct._shapeStruct._radius;
-            }
-            #endregion
+            _sprite = sprite;
+            _position = position;
+            _speed = speed;
+            _lifeTime = lifeTime;
+            _direction = direction;
+            _rotation = rotation;
+            _rotationSpeed = rotationSpeed;
+            _scale = scale;
+            _minSize = minSize;
+            _startOpacity = startOpacity;
+            //
+            _fade = startOpacity;
+            _center = new Vector2(sprite.Width / 2.0f, sprite.Height / 2.0f);
+            _totalLifeTime = 0;
+        }
+
+        public void Update(float deltaTime)
+        {
+            float xDir = (float)(System.Math.Cos((double)MathHelper.ToRadians(_direction)));
+            float yDir = (float)(-System.Math.Sin((double)MathHelper.ToRadians(_direction)));
+            _position.X += xDir * _speed*deltaTime;
+            _position.Y += yDir * _speed*deltaTime;
+
+            _rotation += _rotationSpeed * deltaTime;
+            _totalLifeTime += deltaTime;
+            _fade -= (int)(deltaTime * 100);
+        }
+        public void Draw(SpriteBatch sp)
+        {
+            if (_sprite != null)
+                sp.Draw(texture:_sprite,
+                    position: null,
+                    destinationRectangle: new Rectangle((int)_position.X,(int)_position.Y,_minSize,_minSize),
+                    color: new Color(_fade, _fade, _fade, _fade),
+                    rotation: _rotation,
+                    origin: _center,
+                    scale:new Vector2(_scale,_scale),
+                    effects: SpriteEffects.None,
+                    layerDepth: 0.0f);
+        }
+        // properties
+        public Vector2 POSITION
+        {
+            protected set { _position = value; }
+            get { return _position; }
+        }
+        public float TOTALTIMELIFE
+        {
+            protected set { _totalLifeTime = value; }
+            get { return _totalLifeTime; }
+        }
+        public float LIFETIME
+        {
+            protected set { _lifeTime = value; }
+            get { return _lifeTime; }
         }
     }
 }
