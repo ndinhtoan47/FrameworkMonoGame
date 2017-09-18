@@ -34,7 +34,7 @@ namespace Framework
         {
             content = _content;
             nTank = new Tank();
-            nEnemy = new Enemy();
+            //nEnemy = new Enemy();
             _nItem = new List<Item>();
             nCollision = new Collision();
             _name = "gameScene";
