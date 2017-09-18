@@ -49,6 +49,7 @@
     <Compile Include="Generality\Bases\UI\Button.cs" />
     <Compile Include="Generality\Bases\UI\DemoButton.cs" />
     <Compile Include="Generality\ColisionDetection\Collision.cs" />
+    <Compile Include="Generality\ColisionDetection\QuadTree.cs" />
     <Compile Include="Generality\Enemy\Enemy.cs" />
     <Compile Include="Generality\Enemy\EnemyBullet.cs" />
     <Compile Include="Generality\Enemy\EnemyControl.cs" />
