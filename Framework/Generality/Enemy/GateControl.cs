@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Input;
 using Framework.Generality.Bases;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
+using Framework.Generality.ColisionDetection;
 
 
 namespace Framework.Generality.Enemy
@@ -20,16 +21,16 @@ namespace Framework.Generality.Enemy
         public Vector2 poisiton;
         List<Enemy> ManegerMonster = new List<Enemy>();
         protected ContentManager content;
-        protected float delaytime = 0.2f;
+        protected float delaytime = 0.1f;
         protected float totaledelaytiem = 0;
-
+        protected float a = 0;
         protected float phase = 0f;
-        protected float totalPhase = 11;
-
+        protected float totalPhase = 13f;
+        protected int cout;
         protected float Seri = 213f;
-
+        protected Collision col;
         protected Enemy Tank;
-        protected float delapađTime = 10f;
+        protected float delapađTime = 5f;
         protected float TotalAddTime = 0f;
         protected bool Open = false;
         public GateControl(ContentManager _content)
@@ -40,10 +41,14 @@ namespace Framework.Generality.Enemy
             DesRec.X = 100;
             DesRec.Y = 100;
             Open = false;
-           
+            col = new Collision();
         }
       
-    
+     public int Number()
+        {
+            int j = ManegerMonster.Count;
+            return j;
+        }
         public void UpdataPhase(float DeltaTime)
         {
             if (totaledelaytiem > delaytime)
@@ -58,11 +63,60 @@ namespace Framework.Generality.Enemy
             }
             if (phase == totalPhase)
             {
-
+                cout++;
                 phase = 0;
                 Seri = 213;
                 Open = false;
             }
+        }
+        private void UpdateGate(float DeltaTime)
+        {
+            if (TotalAddTime > delapađTime)
+            {
+
+                Open = true;
+                TotalAddTime = 0;
+                Random r = new Random();
+                int nextValue = r.Next(0, 3);
+                if (nextValue == 0)
+                {
+                    poisiton.X = 100;
+                    poisiton.Y = 200;
+                }
+                if (nextValue == 1)
+                {
+                    poisiton.X = 250;
+                    poisiton.Y = 250;
+                }
+                if (nextValue == 2)
+                {
+                    poisiton.X = 600;
+                    poisiton.Y = 400;
+                }
+                if (nextValue == 3)
+                {
+                    poisiton.X = 450;
+                    poisiton.Y = 300;
+                }
+                DesRec.X = (int)poisiton.X;
+                DesRec.Y = (int)poisiton.Y;
+                ManegerMonster.Add(Tank = new Enemy(poisiton, content.Load<Texture2D>("TankTitle1"), content.Load<Texture2D>("Bullet3")));
+                
+            }
+            else
+            {
+                this.TotalAddTime += DeltaTime;
+
+            }
+            if (Open == true)
+
+            {
+                this.UpdataPhase(DeltaTime);
+
+
+            }
+          
+            
         }
         public void Updata(float DeltaTime)
         {
@@ -70,39 +124,28 @@ namespace Framework.Generality.Enemy
             {
                 Monster.Update(DeltaTime);
             }
-                if (TotalAddTime > delapađTime)
+            for (int i = 0; i < cout; i++)
             {
-
-                Open = true;
-                TotalAddTime = 0;
-                Random r = new Random();
-                int nextValueX = r.Next(0, 750);
-                int nextvalueY = r.Next(0, 550);
-                poisiton.X = nextValueX;
-                poisiton.Y = nextvalueY;
-                ManegerMonster.Add(
-                   Tank= new Enemy( poisiton, content.Load<Texture2D>("TankTitle1"), content.Load<Texture2D>("Bullet3")));
-                DesRec.X = (int)poisiton.X + 24;
-                DesRec.Y = (int)poisiton.Y+24;
-                
-
+                for (int j = i+1; j < cout; j++)
+                {
+                  bool a=  col.Intersect(ManegerMonster[i].BOX2D, ManegerMonster[j].BOX2D);
+                    if(a== true)
+                    {
+                        ManegerMonster[j].CheckCollision(a, DeltaTime);
+                        ManegerMonster[i].CheckCollision(a, DeltaTime);
+                    }
+                }
             }
-            else
+            if (cout < 5)
+            { UpdateGate(DeltaTime); }
+            if (a > 20)
             {
-                this.TotalAddTime += DeltaTime;
-                
-            }
-            if(Open== true)
-
-            {
-                this.UpdataPhase(DeltaTime);
-               
-
+                ManegerMonster.RemoveAt(0);
+                cout--;
+                a = 0;
             }
 
-
-            int i = ManegerMonster.Count;
-
+            a += 1 * DeltaTime; 
         }
         public void Draw(SpriteBatch sp)
         {
@@ -111,7 +154,7 @@ namespace Framework.Generality.Enemy
                 Monster.Draw(sp);
             }
                 Gatesprite = content.Load<Texture2D>("shape" + Seri);
-            if (Open == true)
+            if (Open == true&& cout < 5)
                 sp.Draw(Gatesprite,DesRec, Rectrag, Color.Wheat);
         }
     }
