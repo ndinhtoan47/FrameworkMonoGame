@@ -42,6 +42,18 @@ namespace Framework.Generality.Bases.Camera2D
                 * Matrix.CreateTranslation(new Vector3(_viewportWidth / 2, _viewportHeight / 2, 0));
             return result;
         }
+        public void ZoomOut()
+        {
+            _zoom -= 0.2f;
+            if (_zoom <= 0.1f)
+            {
+                _zoom = 0.2f;
+            }
+        }
+        public void ZoomIn()
+        {
+            _zoom += 0.2f;
+        }
         public void Follow(bool value)
         {
             _follow = value;

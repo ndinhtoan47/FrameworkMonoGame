@@ -13,9 +13,13 @@ namespace Framework.Generality.Bases
 
         public Scene(string name, ContentManager contents)
         {
-            _name = "";
+            _name = name;
             _contents = contents;
             _isInit = false;
+        }
+
+        public Scene()
+        {
         }
 
         public virtual bool Init() 

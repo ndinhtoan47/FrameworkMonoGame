@@ -9,7 +9,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 using Framework.MainTank;
+using Framework.Generality.Bases.Camera2D;
 using Microsoft.Xna.Framework.Content;
+using Framework.Generality.Bases.ParticleSystem;
+using Framework.Generality.Particles;
 
 namespace Framework
 {
@@ -20,9 +23,12 @@ namespace Framework
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        GateControl Gate;
-        Enemy monster;
-        Map map1;
+        Texture2D backg;
+        Camera cam;
+        Map map;
+        FirePar firePar;
+        ExplosionPar explosionPar;
+        Texture2D tree;
         static public ContentManager _content;
         public Game1()
         {
@@ -31,10 +37,10 @@ namespace Framework
             IsMouseVisible = true;
             graphics.PreferredBackBufferWidth = Constants.VIEWPORT_WIDTH;
             graphics.PreferredBackBufferHeight = Constants.VIEWPORT_HEIGHT;
-            //newTank = new Tank();
-          
-            Gate = new GateControl(Content);
-            
+            cam = new Camera();
+            map = new Map();
+            firePar = new FirePar();
+            explosionPar = new ExplosionPar();
         }
 
         /// <summary>
@@ -46,12 +52,7 @@ namespace Framework
         protected override void Initialize()
         {
             _content = Content;
-            //map1 = new Map();
-            ////map1.Init(map1.LoadFileMap(@"../../../../Maps/map1.txt"),64);
-            //map1.Init(new int[,] {  {1,1,2,3 },
-            //                        {2,2,4,2 },
-            //                        {2,3,1,0 }, }, 64);
-          
+            map.Init(map.LoadFileMap(@"../../../../Maps\map1.data"),20);
             base.Initialize();
         }
 
@@ -64,9 +65,11 @@ namespace Framework
           
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            //newTank.LoadContents(Content);
-          
-            //map1.LoadContents(Content);
+            map.LoadContents(Content);
+            backg = Content.Load<Texture2D>("backg");
+            firePar.LoadContents(Content);
+            explosionPar.LoadContents(Content);
+            tree = Content.Load<Texture2D>(@"Tiles\2");
         }
 
         /// <summary>
@@ -86,9 +89,15 @@ namespace Framework
         protected override void Update(GameTime gameTime)
         {
             Input.Update();
-            //newTank.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-            Gate.Updata((float)gameTime.ElapsedGameTime.TotalSeconds);
-         
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //cam.Update(deltaTime,new Vector2(400,300));
+            //if (Input.Clicked(Constants.MOUSEBUTTON_LEFT))
+            //    cam.ZoomIn();
+            //if (Input.Clicked(Constants.MOUSEBUTTON_RIGHT))
+            //    cam.ZoomOut();
+            firePar.Update(deltaTime);
+            explosionPar.Update(deltaTime);
+            
             base.Update(gameTime);
         }
 
@@ -99,12 +108,15 @@ namespace Framework
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Green);
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-            //newTank.Draw(spriteBatch);
-          
-            Gate.Draw(spriteBatch);
-            //map1.Draw(spriteBatch);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,null,null,null,null,cam.GetTransfromMatrix());
+            //spriteBatch.Draw(backg, new Vector2(0, 0), Color.White);
+            //map.Draw(spriteBatch);
+            
+            spriteBatch.Draw(tree, new Rectangle(80, 70, 40, 40), new Color(100,100,100,255));
+            explosionPar.Draw(spriteBatch);
+            firePar.Draw(spriteBatch);
             spriteBatch.End();
+            
             base.Draw(gameTime);
         }
     }

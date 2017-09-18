@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,10 +7,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Framework.Generality.Bases;
 
 namespace Framework.MainTank
 {
-    class Bullet : Object
+    public class Bullet : Object
     {
         public Texture2D image;
         //public float rotation;
@@ -29,7 +30,7 @@ namespace Framework.MainTank
 
         public bool isVisible;
 
-        public Bullet(Texture2D _image)
+        public Bullet(Texture2D _image) : base()
         {
             image = _image;
             isVisible = false;
@@ -37,7 +38,7 @@ namespace Framework.MainTank
         }
 
 
-        public void Draw(SpriteBatch sp)
+        public override void Draw(SpriteBatch sp)
         {
             sp.Draw(image, position, null, Color.White, 0f, origin, 1f, SpriteEffects.None, 0);
         }
