@@ -39,12 +39,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Game1.cs" />
-    <Compile Include="GameScene.cs" />
     <Compile Include="Generality\Bases\Box2D.cs" />
     <Compile Include="Generality\Bases\Camera2D\Camera.cs" />
+    <Compile Include="Generality\Bases\GameScenes\LoginScene.cs" />
+    <Compile Include="Generality\Bases\GameScenes\MenuScene.cs" />
+    <Compile Include="Generality\Bases\GameScenes\OverScene.cs" />
     <Compile Include="Generality\Bases\GameScenes\PlayScene.cs" />
     <Compile Include="Generality\Bases\Map.cs" />
     <Compile Include="Generality\Bases\ParticleSystem\Emitter.cs" />
+    <Compile Include="Generality\Bases\ParticleSystem\FadeHelper.cs" />
     <Compile Include="Generality\Bases\ParticleSystem\Particle.cs" />
     <Compile Include="Generality\Bases\ParticleSystem\ParticleSystem.cs" />
     <Compile Include="Generality\Bases\ParticleSystem\RandomMaxMin.cs" />

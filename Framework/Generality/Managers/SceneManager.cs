@@ -30,11 +30,15 @@ namespace Framework.Generality.Manager
         public bool Init()
         {
             // add scenes
+            _isStarted = true;
             if (_activeScene == null)
             {
-                _activeScene.Init();
+                return false;
             }
-            _isStarted = true;
+            if(!_activeScene.INIT)
+            {
+                _activeScene.Init();
+            }           
             return _activeScene.INIT;
         }
         public void Add(Scene newScene)

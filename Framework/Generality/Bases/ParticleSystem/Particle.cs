@@ -7,6 +7,7 @@ namespace Framework.Generality.Bases.ParticleSystem
     {
         protected Texture2D _sprite;
         protected Vector2 _position;
+        protected FadeHelper _fadeHelper;
         protected float _speed;
         protected float _lifeTime;
         protected float _totalLifeTime;
@@ -38,6 +39,7 @@ namespace Framework.Generality.Bases.ParticleSystem
             _fade = startOpacity;
             _center = new Vector2(sprite.Width / 2.0f, sprite.Height / 2.0f);
             _totalLifeTime = 0;
+            _fadeHelper = new FadeHelper();
         }
 
         public void Update(float deltaTime)
@@ -49,7 +51,7 @@ namespace Framework.Generality.Bases.ParticleSystem
 
             _rotation += _rotationSpeed * deltaTime;
             _totalLifeTime += deltaTime;
-            _fade -= (int)(deltaTime * 100);
+            _fade = _fadeHelper.UpdateFade(_fade, _lifeTime, _totalLifeTime);
         }
         public void Draw(SpriteBatch sp)
         {

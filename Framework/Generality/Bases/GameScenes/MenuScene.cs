@@ -7,10 +7,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Framework.Generality.Bases.GameScenes
 {
-    public class PlayScene : Scene
+    public class MenuScene : Scene
     {
-        public PlayScene(ContentManager contents) :
-            base(Constants.SCENE_PLAY,contents)
+        public MenuScene(ContentManager contents) :
+            base(Constants.SCENE_MENU, contents)
         {
         }
 
@@ -24,12 +24,7 @@ namespace Framework.Generality.Bases.GameScenes
             _contents.Unload();
             _isInit = false;
         }
-        public override void Draw(SpriteBatch sp)
-        {
-            sp.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, null);
-
-            sp.End();
-        }
+        public override void Draw(SpriteBatch sp) { }
         public override GameManager.GameState Update(float deltaTime)
         {
             return GameManager.GameState.None;

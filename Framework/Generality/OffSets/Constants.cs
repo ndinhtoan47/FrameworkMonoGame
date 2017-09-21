@@ -8,6 +8,7 @@ namespace Framework.Generality.OffSets
 {
     public static class Constants
     {
+        public static readonly string SCENE_LOGIN = "login";
         public static readonly string SCENE_PLAY = "play";
         public static readonly string SCENE_OVER = "over";
         public static readonly string SCENE_MENU = "menu";

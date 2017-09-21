@@ -38,8 +38,8 @@ namespace Framework.Generality.Particles
                 while (count < 15)
                 {
                     _particles.Add(new Particle(_textures[_rd.RandomInt(0, _textures.Count - 1)],
-                                                 new Microsoft.Xna.Framework.Vector2(_rd.RandomInt(95, 100), _rd.RandomInt(20, 30)),
-                                                 _rd.RandomInt(3,10),
+                                                 new Microsoft.Xna.Framework.Vector2(_rd.RandomInt(90, 100), _rd.RandomInt(20, 30)),
+                                                 _rd.RandomInt(5,10),
                                                  (float)(_rd.RandomDouble() + 1.50d),
                                                  _rd.RandomInt(-30, 330),
                                                  (float)_rd.RandomDouble(),
