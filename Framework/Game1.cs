@@ -13,6 +13,8 @@ using Framework.Generality.Bases.Camera2D;
 using Microsoft.Xna.Framework.Content;
 using Framework.Generality.Bases.ParticleSystem;
 using Framework.Generality.Particles;
+using Framework.Generality.Manager;
+using Framework.Generality.Bases.GameScenes;
 
 namespace Framework
 {
@@ -29,8 +31,8 @@ namespace Framework
         FirePar firePar;
         ExplosionPar explosionPar;
         Texture2D tree;
-        GameScene play;
         static public ContentManager _content;
+        SceneManager sceneManager;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -42,7 +44,6 @@ namespace Framework
             map = new Map();
             firePar = new FirePar();
             explosionPar = new ExplosionPar();
-            play = new GameScene(Content);
         }
 
         /// <summary>
@@ -54,7 +55,12 @@ namespace Framework
         protected override void Initialize()
         {
             _content = Content;
-            map.Init(map.LoadFileMap(@"../../../../Maps\map1.data"),20);
+            sceneManager = new SceneManager(Content);
+            sceneManager.Add(new PlayScene(Content));
+            sceneManager.Add(new MenuScene(Content));
+            sceneManager.Add(new OverScene(Content));
+            sceneManager.Add(new LoginScene(Content));
+            sceneManager.Init();
             base.Initialize();
         }
 
@@ -72,7 +78,6 @@ namespace Framework
             firePar.LoadContents(Content);
             explosionPar.LoadContents(Content);
             tree = Content.Load<Texture2D>(@"Tiles\2");
-            play.LoadContents(Content);
         }
 
         /// <summary>
@@ -93,15 +98,14 @@ namespace Framework
         {
             Input.Update();
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            cam.Update(deltaTime, play.tankPos);
+            //cam.Update(deltaTime,new Vector2(400,300));
             //if (Input.Clicked(Constants.MOUSEBUTTON_LEFT))
             //    cam.ZoomIn();
             //if (Input.Clicked(Constants.MOUSEBUTTON_RIGHT))
             //    cam.ZoomOut();
             firePar.Update(deltaTime);
             explosionPar.Update(deltaTime);
-
-            play.Update(deltaTime);
+            
             base.Update(gameTime);
         }
 
@@ -115,10 +119,10 @@ namespace Framework
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,null,null,null,null,cam.GetTransfromMatrix());
             //spriteBatch.Draw(backg, new Vector2(0, 0), Color.White);
             //map.Draw(spriteBatch);
+            
             spriteBatch.Draw(tree, new Rectangle(80, 70, 40, 40), new Color(100,100,100,255));
             explosionPar.Draw(spriteBatch);
             firePar.Draw(spriteBatch);
-            play.Draw(spriteBatch);
             spriteBatch.End();
             
             base.Draw(gameTime);
