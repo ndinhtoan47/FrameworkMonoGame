@@ -29,11 +29,13 @@ namespace Framework.MainTank
         protected string tankState = "";
         protected float TotaldelayTimeEffect = 0f;
         protected float delayTimeEffect = 10f;
+        protected int Hp = 3;
+        public bool isCollision;
 
         protected float rotation;
         protected Vector2 _origin;
         protected float rotationVelocity = 3f;
-        protected float linearVelocity = 1.5f;
+        protected float linearVelocity = 100f;
 
 
         protected List<Bullet> bullets = new List<Bullet>();
@@ -44,12 +46,13 @@ namespace Framework.MainTank
         Collision nCollision;
 
         //Enemy nEnemy;
-        
+
         public Tank()
         {
             tankImage = null;
             tankPosition = new Vector2(100, 250);
             tankRec = new Rectangle();
+            isCollision = false;
             //nItem = new Item();
 
             //Demo
@@ -85,15 +88,16 @@ namespace Framework.MainTank
         }
         public override void Update(float deltaTime)
         {
+            _position = this.tankPosition;
             ControllerUpdate(deltaTime, Game1._content);
             tankEffect(deltaTime);
-            _position = tankPosition;
+            UpdateHp(deltaTime);
         }
         public void tankEffect(float deltaTime)
         {
             if (hpUp)
             {
-
+                Hp += 1;
             }
             if (powerUp)
             {
@@ -133,48 +137,49 @@ namespace Framework.MainTank
 
         public void ControllerUpdate(float deltaTime, ContentManager contents)
         {
-            var direction = new Vector2((float)Math.Cos(MathHelper.ToRadians(90) - rotation), -(float)Math.Sin(MathHelper.ToRadians(90) - rotation));
+            //var direction = new Vector2((float)Math.Cos(MathHelper.ToRadians(90) - rotation), -(float)Math.Sin(MathHelper.ToRadians(90) - rotation));
 
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
-                //rotation -= MathHelper.ToRadians(rotationVelocity);
                 rotation = 4.71f;
-                tankPosition += direction * linearVelocity;
+                tankPosition.X -= linearVelocity * deltaTime;
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.D)) 
+            else if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
-                //rotation += MathHelper.ToRadians(rotationVelocity);
                 rotation = 1.59f;
-                tankPosition += direction * linearVelocity;
+                tankPosition.X +=  linearVelocity * deltaTime;
             }
-
-
-
-            if (Keyboard.GetState().IsKeyDown(Keys.W))
+            else if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
-                tankPosition += direction * linearVelocity;
+                tankPosition.Y -=linearVelocity * deltaTime;
                 rotation = 0f;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.S))
+            else if (Keyboard.GetState().IsKeyDown(Keys.S)) 
             {
-                tankPosition += direction * linearVelocity;
+                tankPosition.Y += linearVelocity*deltaTime;
                 rotation = 3.15f;
             }
+           
+
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space) && preKey.IsKeyUp(Keys.Space))
                 Shoot(contents);
 
+            //test
+            if (Keyboard.GetState().IsKeyDown(Keys.T) && preKey.IsKeyUp(Keys.T))
+                isCollision = true;
+
             preKey = Keyboard.GetState();
             UpdateBullets(deltaTime);
-                
+
         }
 
         public void UpdateBullets(float deltaTime)
         {
-            foreach(Bullet bullet in bullets)
+            foreach (Bullet bullet in bullets)
             {
                 bullet.position += bullet.velocity;
-                if (Vector2.Distance(bullet.position, tankPosition) > 300) 
+                if (Vector2.Distance(bullet.position, tankPosition) > 300)
                     bullet.isVisible = false;
             }
 
@@ -189,13 +194,13 @@ namespace Framework.MainTank
 
         }
 
-       public string spriteTank()
+        public string spriteTank()
         {
             string _string;
             if (powerUp)
                 return _string = "_bullet";
             else return _string = "bullet";
-                
+
         }
 
 
@@ -207,7 +212,7 @@ namespace Framework.MainTank
             nBullet.isVisible = true;
 
             _boxBullet = new Box2D(nBullet.position.X, nBullet.position.Y, nBullet.velocity.X, nBullet.velocity.Y, nBullet.image.Width, nBullet.image.Height);
-                
+
             if (bullets.Count() < 20)
                 bullets.Add(nBullet);
         }
@@ -224,7 +229,7 @@ namespace Framework.MainTank
         {
             return _boxBullet;
         }
-        
+
         public string TANKSTATE
         {
             get
@@ -238,6 +243,14 @@ namespace Framework.MainTank
                 else return null;
             }
             set { }
+        }
+
+        public void UpdateHp(float deltaTime)
+        {
+            if (isCollision)
+                Hp -= 1;
+            if (Hp >= 3)
+                Hp = 3;
         }
         //demo
         //public Box2D boxEnemy()
@@ -256,7 +269,7 @@ namespace Framework.MainTank
         //        nItem.isVisible = false;
         //    }
         //}
-   
+
 
     }
 }
