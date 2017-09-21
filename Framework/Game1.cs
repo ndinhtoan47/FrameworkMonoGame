@@ -23,12 +23,11 @@ namespace Framework
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Texture2D backg;
+        Tank newTank;
         Camera cam;
-        Map map;
-        FirePar firePar;
-        ExplosionPar explosionPar;
-        Texture2D tree;
+        Enemy monster;
+        //Map map1;
+        Map map1;
         static public ContentManager _content;
         public Game1()
         {
@@ -37,10 +36,10 @@ namespace Framework
             IsMouseVisible = true;
             graphics.PreferredBackBufferWidth = Constants.VIEWPORT_WIDTH;
             graphics.PreferredBackBufferHeight = Constants.VIEWPORT_HEIGHT;
+            newTank = new Tank();
+            monster = new Enemy();
             cam = new Camera();
-            map = new Map();
-            firePar = new FirePar();
-            explosionPar = new ExplosionPar();
+            
         }
 
         /// <summary>
@@ -65,11 +64,9 @@ namespace Framework
           
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            map.LoadContents(Content);
-            backg = Content.Load<Texture2D>("backg");
-            firePar.LoadContents(Content);
-            explosionPar.LoadContents(Content);
-            tree = Content.Load<Texture2D>(@"Tiles\2");
+            newTank.LoadContents(Content);
+            monster.LoadContents(Content);
+            //map1.LoadContents(Content);
         }
 
         /// <summary>
@@ -89,15 +86,16 @@ namespace Framework
         protected override void Update(GameTime gameTime)
         {
             Input.Update();
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            //cam.Update(deltaTime,new Vector2(400,300));
-            //if (Input.Clicked(Constants.MOUSEBUTTON_LEFT))
-            //    cam.ZoomIn();
-            //if (Input.Clicked(Constants.MOUSEBUTTON_RIGHT))
-            //    cam.ZoomOut();
-            firePar.Update(deltaTime);
-            explosionPar.Update(deltaTime);
-            
+            //tank.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+
+            //monster.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+            float elapsedGameTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //demo.Update(elapsedGameTime);
+            cam.Update(elapsedGameTime, newTank.POSITION);
+            //tank.Update(elapsedGameTime);
+            newTank.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+            cam.Update((float)gameTime.ElapsedGameTime.TotalSeconds,newTank.POSITION);
+            monster.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             base.Update(gameTime);
         }
 
@@ -108,13 +106,10 @@ namespace Framework
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Green);
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,null,null,null,null,cam.GetTransfromMatrix());
-            //spriteBatch.Draw(backg, new Vector2(0, 0), Color.White);
-            //map.Draw(spriteBatch);
-            
-            spriteBatch.Draw(tree, new Rectangle(80, 70, 40, 40), new Color(100,100,100,255));
-            explosionPar.Draw(spriteBatch);
-            firePar.Draw(spriteBatch);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, cam.GetTransfromMatrix());
+            newTank.Draw(spriteBatch);
+            monster.Draw(spriteBatch);
+            //map1.Draw(spriteBatch);
             spriteBatch.End();
             
             base.Draw(gameTime);
