@@ -1,5 +1,6 @@
 ﻿using Framework.Generality.Bases;
 using System.Collections.Generic;
+using Framework.Generality.Enemy;
 
 namespace Framework.Generality.Managers
 {
@@ -34,6 +35,10 @@ namespace Framework.Generality.Managers
                 return Object.Essential.ITEM;
             if (obj is MainTank.Bullet)
                 return Object.Essential.M_BULLET;
+            if (obj is Enemy.EnemyControl)
+                return Object.Essential.ENEMY;
+            if (obj is Enemy.EnemyBullet)
+                return Object.Essential.ENEMYBULL;
             return Object.Essential.NONE;
         }
         // properties

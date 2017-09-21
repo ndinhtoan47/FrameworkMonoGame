@@ -21,14 +21,14 @@ namespace Framework.Generality.Enemy
        public  Vector2 velocity ;
         public bool Invisible = true;
 
-        public EnemyBullet(Texture2D texture ) 
+        public EnemyBullet(Texture2D texture ) :base()
         {
             BulletSprite = texture;
             Suorbull = new Rectangle(0, 0, 104, 103);
             RecBull = new Rectangle(0, 0, 10, 10);
 
             Origin = new Vector2(15, 15);
-            
+            _box = new Box2D(0, 0, 0, 0, 10, 10);
         }
         public override bool Init()
         {
@@ -41,8 +41,10 @@ namespace Framework.Generality.Enemy
             RecBull.X = (int)BullPoisition.X;
 
             RecBull.Y = (int)BullPoisition.Y;
-
-
+            _box.x = BullPoisition.X;
+            _box.y = BullPoisition.Y;
+            _box.vx = velocity.X;
+            _box.vy = velocity.Y;
          
             base.Update(deltaTime);
         }

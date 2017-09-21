@@ -10,7 +10,13 @@ namespace Framework.Generality.Bases
     {
         public enum Essential
         {
-            NONE,MAINCHARACTER,ITEM,M_BULLET,
+
+            NONE,
+            ENEMY,// monter
+            ENEMYBULL,// Bullet of enenmy
+
+            MAINCHARACTER,ITEM,M_BULLET,
+
         }
         // local of the object
         protected Vector2 _position;

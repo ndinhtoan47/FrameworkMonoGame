@@ -158,6 +158,146 @@ namespace Framework.Generality.Enemy
             if (position.Y  > 600 - 16)
                 position.Y = 600 - 16;
         }
+        public void CheckCollision(bool a, float DeltaTime)
+        {
+            if (a == true && Right == true)
+            {
+                position.X -= 3;
+                Right = false;
+                Random r = new Random();
+                int nextValue = r.Next(0, 2);
+                if (nextValue == 0)
+                {
+                    Angle = 0;
+                    Up = true;
+                    Left = false;
+                    Right = false;
+                    Down = false;
+                }
+
+                if (nextValue == 1)
+                {
+                    Angle = 3.15f;
+                    Down = true;
+                    Up = false;
+                    Left = false;
+                    Right = false;
+                }
+                if (nextValue == 2)
+                {
+                    Angle = 4.71f;
+                    Left = true;
+                    Down = false;
+                    Up = false;
+
+                    Right = false;
+                }
+            }
+          if(a==true&&Left==true)
+            {
+                position.X += 3;
+                Left = false;
+                Random r = new Random();
+                int nextValue = r.Next(0, 2);
+                if (nextValue == 0)
+                {
+                    Angle = 0;
+                    Up = true;
+                    Left = false;
+                    Right = false;
+                    Down = false;
+                }
+                if (nextValue == 1)
+                {
+                    Angle = 1.59f;
+                    Right = true;
+                    Down = false;
+                    Up = false;
+                    Left = false;
+
+                }
+                if (nextValue == 2)
+                {
+                    Angle = 3.15f;
+                    Down = true;
+                    Up = false;
+                    Left = false;
+                    Right = false;
+                }
+             
+            }
+            if (a == true && Down == true)
+            {
+                position.Y -= 3;
+                Down = false;
+                Random r = new Random();
+                int nextValue = r.Next(0, 2);
+                if (nextValue == 0)
+                {
+                    Angle = 0;
+                    Up = true;
+                    Left = false;
+                    Right = false;
+                    Down = false;
+                }
+                if (nextValue == 1)
+                {
+                    Angle = 1.59f;
+                    Right = true;
+                    Down = false;
+                    Up = false;
+                    Left = false;
+
+                }
+              
+                if (nextValue == 2)
+                {
+                    Angle = 4.71f;
+                    Left = true;
+                    Down = false;
+                    Up = false;
+
+                    Right = false;
+                }
+            }
+            if (a == true && Up == true)
+            {
+                position.Y += 3;
+                Up = false;
+                Random r = new Random();
+                int nextValue = r.Next(0, 2);
+               
+                if (nextValue == 0)
+                {
+                    Angle = 1.59f;
+                    Right = true;
+                    Down = false;
+                    Up = false;
+                    Left = false;
+
+                }
+                if (nextValue == 1)
+                {
+                    Angle = 3.15f;
+                    Down = true;
+                    Up = false;
+                    Left = false;
+                    Right = false;
+                }
+                if (nextValue == 2)
+                {
+                    Angle = 4.71f;
+                    Left = true;
+                    Down = false;
+                    Up = false;
+
+                    Right = false;
+                }
+            }
+        }
+                
+            
+        
 
         public override void Update(float deltaTime)
         {
