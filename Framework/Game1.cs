@@ -29,6 +29,7 @@ namespace Framework
         FirePar firePar;
         ExplosionPar explosionPar;
         Texture2D tree;
+        GameScene play;
         static public ContentManager _content;
         public Game1()
         {
@@ -41,6 +42,7 @@ namespace Framework
             map = new Map();
             firePar = new FirePar();
             explosionPar = new ExplosionPar();
+            play = new GameScene(Content);
         }
 
         /// <summary>
@@ -70,6 +72,7 @@ namespace Framework
             firePar.LoadContents(Content);
             explosionPar.LoadContents(Content);
             tree = Content.Load<Texture2D>(@"Tiles\2");
+            play.LoadContents(Content);
         }
 
         /// <summary>
@@ -90,14 +93,15 @@ namespace Framework
         {
             Input.Update();
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            //cam.Update(deltaTime,new Vector2(400,300));
+            cam.Update(deltaTime, play.tankPos);
             //if (Input.Clicked(Constants.MOUSEBUTTON_LEFT))
             //    cam.ZoomIn();
             //if (Input.Clicked(Constants.MOUSEBUTTON_RIGHT))
             //    cam.ZoomOut();
             firePar.Update(deltaTime);
             explosionPar.Update(deltaTime);
-            
+
+            play.Update(deltaTime);
             base.Update(gameTime);
         }
 
@@ -111,10 +115,10 @@ namespace Framework
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,null,null,null,null,cam.GetTransfromMatrix());
             //spriteBatch.Draw(backg, new Vector2(0, 0), Color.White);
             //map.Draw(spriteBatch);
-            
             spriteBatch.Draw(tree, new Rectangle(80, 70, 40, 40), new Color(100,100,100,255));
             explosionPar.Draw(spriteBatch);
             firePar.Draw(spriteBatch);
+            play.Draw(spriteBatch);
             spriteBatch.End();
             
             base.Draw(gameTime);

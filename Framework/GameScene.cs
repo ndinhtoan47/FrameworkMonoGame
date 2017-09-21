@@ -25,11 +25,10 @@ namespace Framework
         protected Item nItem;
         protected List<Item> _nItem;
         Collision nCollision;
-        protected float totalDelaytimeVisible = 0f;
-        protected float delayTimeVisible = 5f;
-        protected float totalDelaytimeInVisible = 0f;
-        protected float delayTimeInvisible = 11f;
-        protected float totalTimeEffect = 0f;
+        //test
+        protected float delayTime = 0f;
+        protected Texture2D hpBar;
+        protected int healthNum = 3;
         public GameScene(ContentManager _content) : base()
         {
             content = _content;
@@ -51,57 +50,35 @@ namespace Framework
         public void LoadContents(ContentManager content)
         {
             nTank.LoadContents(content);
-            nEnemy.LoadContents(content);
+            hpBar = content.Load<Texture2D>("hpBar");
+            //nEnemy.LoadContents(content);
         }
         public override GameManager.GameState Update(float deltaTime)
         {
             nTank.Update(deltaTime);
-            nEnemy.Update(deltaTime);
+            //nEnemy.Update(deltaTime);
             itemUpdate(deltaTime, Game1._content);
-            collisionUpdate(deltaTime);
+            UpdateBar(deltaTime);
             return base.Update(deltaTime);
         }
         public void itemUpdate(float deltaTime, ContentManager content)
         {
-            spawnItem(deltaTime);
-            //if(_nItem.Count > 0)
-            //{
-            //    foreach(Item i in _nItem)
-            //    {
-            //        i.Update(deltaTime);
-            //    }
-            //}
-            //remove item
-            if (totalTimeEffect >= 8f)
+            if (delayTime >= 5f)
             {
-                _nItem[0].Update(deltaTime);
+                if (_nItem.Count() < 3)
+                {
+                    _nItem.Add(nItem = new Item(randomImage()));
+                }
+                delayTime = 0f;
             }
             else
             {
-                totalTimeEffect += deltaTime;
+                delayTime += deltaTime;
             }
-
-            if (totalDelaytimeInVisible >= delayTimeInvisible)
-            {
-                _nItem.RemoveAt(0);
-                totalDelaytimeInVisible = 0;
-            }
-            else
-            {
-                totalDelaytimeInVisible += deltaTime;
-            }
-
-
-            
-
-            
         }
         public void spawnItem(float deltaTime)
         {
-            if (_nItem.Count() < 3)
-            {
-                _nItem.Add(nItem = new Item(randomImage()));
-            }
+            
         }
         public void removeItem(float deltaTime)
         {
@@ -120,26 +97,41 @@ namespace Framework
                 return image = content.Load<Texture2D>("item2");
             else return null;
         }
-
-        public void collisionUpdate(float deltaTime)
+        public void UpdateBar(float deltaTime)
         {
-            
-        }        
+            if (nTank.isCollision == true) 
+            {
+                healthNum -= 1;
+                nTank.isCollision = false;
+            }
+            if (healthNum <= 0)
+                healthNum = 0;
+        }
+        public void hpDraw(SpriteBatch sp)
+        {
+            if (healthNum == 3)
+                sp.Draw(hpBar, new Rectangle(0, 0, hpBar.Width, hpBar.Height), Color.White);
+            if (healthNum == 2)
+                sp.Draw(hpBar, new Rectangle(0, 0, hpBar.Width - 10, hpBar.Height), Color.White);
+            if (healthNum == 1)
+                sp.Draw(hpBar, new Rectangle(0, 0, hpBar.Width - 30, hpBar.Height), Color.White);
+        }
 
         public override void Draw(SpriteBatch sp)
         {
             nTank.Draw(sp);
-            nEnemy.Draw(sp);
+            //nEnemy.Draw(sp);
             foreach(Item i in _nItem)
             {
                 i.Draw(sp);
             }
+            hpDraw(sp);
             base.Draw(sp);
         }
 
         public Vector2 tankPos
         {
-            get { return this.nTank.POSITION; }
+            get { return nTank.POSITION; }
         }
 
 
