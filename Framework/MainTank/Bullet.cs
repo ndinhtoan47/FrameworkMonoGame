@@ -36,6 +36,11 @@ namespace Framework.MainTank
             isVisible = false;
             //origin = new Vector2(image.Width / 2, image.Height / 2);
         }
+        public override void Update(float deltaTime)
+        {
+            _box = new Box2D(this.position.X, this.position.Y, this.velocity.X, this.velocity.Y, this.image.Width, this.image.Height);
+            base.Update(deltaTime);
+        }
 
 
         public override void Draw(SpriteBatch sp)

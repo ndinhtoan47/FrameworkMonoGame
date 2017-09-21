@@ -91,6 +91,7 @@ namespace Framework.MainTank
             _position = this.tankPosition;
             ControllerUpdate(deltaTime, Game1._content);
             tankEffect(deltaTime);
+            _box = new Box2D(this.tankPosition.X, this.tankPosition.Y, this.linearVelocity, this.linearVelocity, this.tankImage.Width, this.tankImage.Height);
             UpdateHp(deltaTime);
         }
         public void tankEffect(float deltaTime)
@@ -137,7 +138,7 @@ namespace Framework.MainTank
 
         public void ControllerUpdate(float deltaTime, ContentManager contents)
         {
-            //var direction = new Vector2((float)Math.Cos(MathHelper.ToRadians(90) - rotation), -(float)Math.Sin(MathHelper.ToRadians(90) - rotation));
+            var direction = new Vector2((float)Math.Cos(MathHelper.ToRadians(90) - rotation), -(float)Math.Sin(MathHelper.ToRadians(90) - rotation));
 
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
@@ -211,8 +212,6 @@ namespace Framework.MainTank
             nBullet.position = tankPosition + nBullet.velocity * 5;
             nBullet.isVisible = true;
 
-            _boxBullet = new Box2D(nBullet.position.X, nBullet.position.Y, nBullet.velocity.X, nBullet.velocity.Y, nBullet.image.Width, nBullet.image.Height);
-
             if (bullets.Count() < 20)
                 bullets.Add(nBullet);
         }
@@ -221,10 +220,7 @@ namespace Framework.MainTank
             return nBullet.velocity;
         }
 
-        public Box2D boxTank()
-        {
-            return _boxTank = new Box2D(this.tankPosition.X, this.tankPosition.Y, this.linearVelocity, this.linearVelocity, this.tankImage.Width, this.tankImage.Height);
-        }
+        
         public Box2D boxBullet()
         {
             return _boxBullet;

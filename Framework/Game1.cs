@@ -63,6 +63,7 @@ namespace Framework
           
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            sceneManager.GotoScene(Constants.SCENE_PLAY);
         }
 
         /// <summary>

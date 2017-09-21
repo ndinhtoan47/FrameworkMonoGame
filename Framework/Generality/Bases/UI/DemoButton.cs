@@ -9,7 +9,7 @@ namespace Framework.Generality.Bases.UI
     public class DemoButton : Button
     {
         public DemoButton()
-            :base("Demo")
+            :base("")
         {
 
         }
