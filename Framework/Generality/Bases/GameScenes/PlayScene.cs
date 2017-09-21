@@ -1,9 +1,22 @@
 ﻿
 
 using Framework.Generality.Managers;
+using Framework.Generality;
+using Framework.Generality.Bases;
+using Framework.Generality.Enemy;
+using Framework.Generality.InputControl;
 using Framework.Generality.OffSets;
-using Microsoft.Xna.Framework.Content;
+using Framework.Generality.Sounds;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Framework.MainTank;
+using Framework.Generality.Bases.Camera2D;
+using Microsoft.Xna.Framework.Content;
+using Framework.Generality.Bases.ParticleSystem;
+using Framework.Generality.Particles;
+using Framework.Generality.Manager;
+using Framework.Generality.Bases.GameScenes;
 
 namespace Framework.Generality.Bases.GameScenes
 {

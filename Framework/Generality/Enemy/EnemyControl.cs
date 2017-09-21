@@ -36,17 +36,18 @@ namespace Framework.Generality.Enemy
         protected EnemyBullet Bullet;
        
 
-        public EnemyControl(Vector2 point,Texture2D TankTex, Texture2D BullTex)
+        public EnemyControl(Vector2 point,Texture2D TankTex, Texture2D BullTex):base()
         {
             Bullet = new EnemyBullet(BullTex);
             Sprite = TankTex;
-            position =point;
+            position = point + new Vector2(24,24);
             derution = new Rectangle(0,0,32,32);
             Up = false;
             Left = false;
             Right = false;
             Down = false;
             Begin = false;
+            _box = new Box2D(0, 0, 0, 0, 32, 32);
         }
         protected void UpdataPhase(float deltaTime)
         {
@@ -132,13 +133,13 @@ namespace Framework.Generality.Enemy
             {
                 if (Up == true)
                 {
-                    position.Y -= 1 * delayTime;
+                    position.Y -= velocity * deltaTime;
 
                 }
                 if (Down == true)
                 {
 
-                    position.Y += 1 * delayTime;
+                    position.Y += velocity * deltaTime;
                 }
                 if (Left == true)
                 {
@@ -295,7 +296,19 @@ namespace Framework.Generality.Enemy
                 }
             }
         }
-                
+        public void UpdataBox()
+        {
+            _box.x = position.X;
+            _box.y = position.Y;
+            if (Right == true)
+                _box.vx = velocity;
+            if (Left == true)
+                _box.vx = velocity * -1;
+            if (Up == true)
+                _box.vy = velocity * -1;
+            if (Down == true)
+                _box.vy = velocity;
+        }
             
         
 
@@ -303,10 +316,11 @@ namespace Framework.Generality.Enemy
         {
             origin.X =16;
             origin.Y = 16;
-
-            this.UpdataMove(delayTime);
+            //if (Begin == true)
+                this.UpdataMove(deltaTime);
             this.UpdataPhase(deltaTime);
             this.updataBullet(deltaTime);
+            this.UpdataBox();
             base.Update(deltaTime);
         }
         public void updataBullet(float deltaTime)
@@ -347,7 +361,11 @@ namespace Framework.Generality.Enemy
         public override void Draw(SpriteBatch sp)
         {
             sp.Draw(Sprite, position, derution, Color.Wheat, Angle, origin,1f, SpriteEffects.None, 0f);
-            base.Draw(sp);
+            foreach (EnemyBullet bullet in Bull)
+            {
+                bullet.Draw(sp);
+            }
+                base.Draw(sp);
         }
 
     }

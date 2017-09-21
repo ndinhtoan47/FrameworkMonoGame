@@ -43,12 +43,7 @@ namespace Framework.Generality.Enemy
             Open = false;
             col = new Collision();
         }
-      
-     public int Number()
-        {
-            int j = ManegerMonster.Count;
-            return j;
-        }
+  
         public void UpdataPhase(float DeltaTime)
         {
             if (totaledelaytiem > delaytime)
@@ -138,14 +133,14 @@ namespace Framework.Generality.Enemy
             }
             if (cout < 5)
             { UpdateGate(DeltaTime); }
-            //if (a > 20)
-            //{
-            //    ManegerMonster.RemoveAt(0);
-            //    cout--;
-            //    a = 0;
-            //}
+            if (a > 20)
+            {
+                ManegerMonster.RemoveAt(0);
+                cout--;
+                a = 0;
+            }
 
-            //a += 1 * DeltaTime; 
+            a += 1 * DeltaTime;
         }
         public void Draw(SpriteBatch sp)
         {
