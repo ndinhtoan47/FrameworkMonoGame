@@ -1,16 +1,13 @@
 ﻿using Framework.Generality.Managers;
 using Framework.Generality.OffSets;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
 
 namespace Framework.Generality.Bases.GameScenes
 {
     public class LoginScene : Scene
     {
-        protected Texture2D BG;
-        protected Rectangle rec1;
-        ContentManager _content;
         public LoginScene(ContentManager contents) :
             base(Constants.SCENE_LOGIN, contents)
         {
@@ -28,18 +25,21 @@ namespace Framework.Generality.Bases.GameScenes
             _contents.Unload();
             _isInit = false;
         }
-        public override void Draw(SpriteBatch sp)
-        {
-            sp.Draw(BG = _contents.Load<Texture2D>("BGLogin"), rec1, Color.Wheat);
-        }
+        public override void Draw(SpriteBatch sp) { }
         public override GameManager.GameState Update(float deltaTime)
         {
+            if (Keyboard.GetState().IsKeyDown(Keys.Enter) && prekey.IsKeyUp(Keys.Enter))
+            {
+                if (name.Length > 3)
+                {
+                    f_name = name;
+                }
+            }
+
+            prekey = Keyboard.GetState();
+            GetKey();
             return GameManager.GameState.None;
         }
-        public override bool LoadContents()
-        {
-            BG = _contents.Load<Texture2D>("BGLogin");
-            return true;
-        }
+        public override bool LoadContents() { return true; }
     }
 }
