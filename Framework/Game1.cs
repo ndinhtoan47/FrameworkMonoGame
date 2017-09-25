@@ -15,6 +15,7 @@ using Framework.Generality.Bases.ParticleSystem;
 using Framework.Generality.Particles;
 using Framework.Generality.Manager;
 using Framework.Generality.Bases.GameScenes;
+using Framework.Generality.Bases.UI;
 
 namespace Framework
 {
@@ -26,15 +27,21 @@ namespace Framework
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         static public ContentManager _content;
-        static public MouseState mouse;
         SceneManager sceneManager;
+        GateControl Gate;
+        DemoButton button;
+        LoginScene Login;
+        
         public Game1()
         {
+            Login = new LoginScene(Content);
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             graphics.PreferredBackBufferWidth = Constants.VIEWPORT_WIDTH;
             graphics.PreferredBackBufferHeight = Constants.VIEWPORT_HEIGHT;
+            Gate = new GateControl(Content);
+            button = new DemoButton();
         }
 
         /// <summary>
@@ -61,10 +68,10 @@ namespace Framework
         /// </summary>
         protected override void LoadContent()
         {
-          
+            button.LoadContents(Content, "font", "Bullet3");
+            Login.LoadContents();
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            sceneManager.GotoScene(Constants.SCENE_LOGIN);
         }
 
         /// <summary>
@@ -86,6 +93,8 @@ namespace Framework
             Input.Update();
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             sceneManager.Update(deltaTime);
+            Gate.Updata((float)gameTime.ElapsedGameTime.TotalSeconds);
+            button.Update(deltaTime);
             base.Update(gameTime);
         }
 
@@ -95,8 +104,16 @@ namespace Framework
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            Login.Draw(spriteBatch);
             GraphicsDevice.Clear(Color.Green);
-            sceneManager.Draw(spriteBatch);          
+            sceneManager.Draw(spriteBatch);
+
+            spriteBatch.Begin();
+            button.Draw(spriteBatch);
+            Gate.Draw(spriteBatch);
+            spriteBatch.End();
+
+               
             base.Draw(gameTime);
         }
     }
