@@ -12,6 +12,7 @@ using Framework.Generality.Bases;
 using Framework.Generality.InputControl;
 using Framework.Generality.ColisionDetection;
 using Framework.Generality.Enemy;
+using Framework.Generality.Sounds;
 
 namespace Framework.MainTank
 {
@@ -37,7 +38,7 @@ namespace Framework.MainTank
         protected float rotationVelocity = 3f;
         protected float linearVelocity = 100f;
 
-
+        protected SEffect sEff;
         protected List<Bullet> bullets = new List<Bullet>();
         protected Bullet nBullet;
         //protected Item nItem;
@@ -52,7 +53,9 @@ namespace Framework.MainTank
             tankImage = null;
             tankPosition = new Vector2(100, 250);
             tankRec = new Rectangle();
+            sEff = new SEffect();
             isCollision = false;
+
             //nItem = new Item();
 
             //Demo
@@ -66,10 +69,7 @@ namespace Framework.MainTank
         {
             tankImage = contents.Load<Texture2D>("tank");
             tankRec = new Rectangle((int)tankPosition.X, (int)tankPosition.Y, tankImage.Width, tankImage.Height);
-            //nItem.LoadContents(contents);
-            //tankPosition = new Vector2(tankImage.Width / 2f, tankImage.Height / 2f); 
-            //Demo
-            //nEnemy.LoadContents(contents);
+            sEff.LoadContents(contents, "s_tank_1");
         }
         public override void Draw(SpriteBatch sp)
         {
@@ -160,11 +160,14 @@ namespace Framework.MainTank
                 tankPosition.Y += linearVelocity*deltaTime;
                 rotation = 3.15f;
             }
-           
+
 
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space) && preKey.IsKeyUp(Keys.Space))
+            {
+                sEff.Play();
                 Shoot(contents);
+            }
 
             //test
             if (Keyboard.GetState().IsKeyDown(Keys.T) && preKey.IsKeyUp(Keys.T))
