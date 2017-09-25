@@ -26,7 +26,12 @@ namespace Framework
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         static public ContentManager _content;
+        static public MouseState mouse;
         SceneManager sceneManager;
+        GateControl Gate;
+
+        //demo
+        MenuScene menu;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -34,6 +39,9 @@ namespace Framework
             IsMouseVisible = true;
             graphics.PreferredBackBufferWidth = Constants.VIEWPORT_WIDTH;
             graphics.PreferredBackBufferHeight = Constants.VIEWPORT_HEIGHT;
+            Gate = new GateControl(Content);
+            //demo
+            menu = new MenuScene(Content);
         }
 
         /// <summary>
@@ -63,7 +71,7 @@ namespace Framework
           
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            sceneManager.GotoScene(Constants.SCENE_PLAY);
+            sceneManager.GotoScene(Constants.SCENE_LOGIN);
         }
 
         /// <summary>
@@ -85,7 +93,7 @@ namespace Framework
             Input.Update();
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             sceneManager.Update(deltaTime);
-          
+            //Gate.Updata((float)gameTime.ElapsedGameTime.TotalSeconds);
             base.Update(gameTime);
         }
 
@@ -96,9 +104,11 @@ namespace Framework
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Green);
+            spriteBatch.Begin();
+            //Gate.Draw(spriteBatch);
             sceneManager.Draw(spriteBatch);
 
-            spriteBatch.Begin();
+
             spriteBatch.End();
 
                
