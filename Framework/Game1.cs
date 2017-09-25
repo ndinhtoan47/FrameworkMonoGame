@@ -27,7 +27,6 @@ namespace Framework
         SpriteBatch spriteBatch;
         static public ContentManager _content;
         SceneManager sceneManager;
-        GateControl Gate;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -35,7 +34,6 @@ namespace Framework
             IsMouseVisible = true;
             graphics.PreferredBackBufferWidth = Constants.VIEWPORT_WIDTH;
             graphics.PreferredBackBufferHeight = Constants.VIEWPORT_HEIGHT;
-            Gate = new GateControl(Content);
         }
 
         /// <summary>
@@ -87,7 +85,7 @@ namespace Framework
             Input.Update();
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             sceneManager.Update(deltaTime);
-            Gate.Updata((float)gameTime.ElapsedGameTime.TotalSeconds);
+          
             base.Update(gameTime);
         }
 
@@ -101,8 +99,6 @@ namespace Framework
             sceneManager.Draw(spriteBatch);
 
             spriteBatch.Begin();
-
-            Gate.Draw(spriteBatch);
             spriteBatch.End();
 
                

@@ -18,17 +18,21 @@ using Framework.Generality.Manager;
 using Framework.Generality.Bases.GameScenes;
 using System.Collections.Generic;
 using System;
+using Framework.Generality.Bases.Network;
 
 namespace Framework.Generality.Bases.GameScenes
 {
     public class PlayScene : Scene
     {
-        List<Item> listItem;
-        GateControl Gate;
-        Tank nTank;
-        Item nItem;
-        Camera Cam;
-        protected float delayTime = 0f;
+        private List<Item> listItem;
+        private GateControl Gate;
+        private Tank nTank;
+        private Item nItem;
+        private Camera Cam;
+        private float delayTime = 0f;
+
+        // test smartfox
+        Connection _network;
         public PlayScene(ContentManager contents) :
             base(Constants.SCENE_PLAY,contents)
         {
@@ -36,11 +40,18 @@ namespace Framework.Generality.Bases.GameScenes
             nTank = new Tank();
             Cam = new Camera();
             listItem = new List<Item>();
+
+            // test smartfox
+            _network = new Connection();
         }
 
         public override bool Init()
         {
             _isInit = LoadContents();
+
+            // test smartfox
+            _network.Init();
+            _network.SendConnectRequest();
             return _isInit;
         }
         public override void Shutdown()
@@ -51,25 +62,28 @@ namespace Framework.Generality.Bases.GameScenes
         public override void Draw(SpriteBatch sp)
         {
             sp.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Cam.GetTransfromMatrix());
-            Gate.Draw(sp);
-            nTank.Draw(sp);
-            foreach(Item i in listItem)
-            {
-                i.Draw(sp);
-            }
+            //Gate.Draw(sp);
+            //nTank.Draw(sp);
+            //foreach(Item i in listItem)
+            //{
+            //    i.Draw(sp);
+            //}
             sp.End();
         }
         public override GameManager.GameState Update(float deltaTime)
         {
-            Gate.Updata(deltaTime);
-            nTank.Update(deltaTime);
-            Cam.Update(deltaTime, nTank.POSITION);
-            itemUpdate(deltaTime);
+            //Gate.Updata(deltaTime);
+            //nTank.Update(deltaTime);
+            //Cam.Update(deltaTime, nTank.POSITION);
+            //itemUpdate(deltaTime);
+
+            // test smartfox
+            _network.Update();
             return GameManager.GameState.None;
         }
         public override bool LoadContents()
         {
-            nTank.LoadContents(_contents);
+            //nTank.LoadContents(_contents);
             return true;
         }
 
