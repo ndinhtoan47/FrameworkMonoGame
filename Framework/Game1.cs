@@ -29,9 +29,6 @@ namespace Framework
         static public MouseState mouse;
         SceneManager sceneManager;
         GateControl Gate;
-
-        //demo
-        MenuScene menu;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -40,8 +37,6 @@ namespace Framework
             graphics.PreferredBackBufferWidth = Constants.VIEWPORT_WIDTH;
             graphics.PreferredBackBufferHeight = Constants.VIEWPORT_HEIGHT;
             Gate = new GateControl(Content);
-            //demo
-            menu = new MenuScene(Content);
         }
 
         /// <summary>
@@ -93,7 +88,7 @@ namespace Framework
             Input.Update();
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             sceneManager.Update(deltaTime);
-            //Gate.Updata((float)gameTime.ElapsedGameTime.TotalSeconds);
+            Gate.Updata((float)gameTime.ElapsedGameTime.TotalSeconds);
             base.Update(gameTime);
         }
 
@@ -108,7 +103,9 @@ namespace Framework
             //Gate.Draw(spriteBatch);
             sceneManager.Draw(spriteBatch);
 
+            spriteBatch.Begin();
 
+            Gate.Draw(spriteBatch);
             spriteBatch.End();
 
                
