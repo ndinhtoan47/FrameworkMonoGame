@@ -3,15 +3,19 @@ using Framework.Generality.OffSets;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Framework.Generality.Bases.GameScenes
 {
     public class LoginScene : Scene
     {
+        protected Texture2D BG;
+        protected Rectangle rec1;
+
         public LoginScene(ContentManager contents) :
             base(Constants.SCENE_LOGIN, contents)
         {
-            _content = contents;
+            _contents = contents;
             rec1 = new Rectangle(0, 0, 800, 600);
         }
 
@@ -28,16 +32,16 @@ namespace Framework.Generality.Bases.GameScenes
         public override void Draw(SpriteBatch sp) { }
         public override GameManager.GameState Update(float deltaTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Enter) && prekey.IsKeyUp(Keys.Enter))
-            {
-                if (name.Length > 3)
-                {
-                    f_name = name;
-                }
-            }
+            //if (Keyboard.GetState().IsKeyDown(Keys.Enter) && prekey.IsKeyUp(Keys.Enter))
+            //{
+            //    if (name.Length > 3)
+            //    {
+            //        f_name = name;
+            //    }
+            //}
 
-            prekey = Keyboard.GetState();
-            GetKey();
+            //prekey = Keyboard.GetState();
+            //GetKey();
             return GameManager.GameState.None;
         }
         public override bool LoadContents() { return true; }

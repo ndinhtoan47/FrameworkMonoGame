@@ -95,7 +95,7 @@ namespace Framework.Generality.Enemy
                 }
                 DesRec.X = (int)poisiton.X;
                 DesRec.Y = (int)poisiton.Y;
-                ManegerMonster.Add(Tank = new Enemy(poisiton, content.Load<Texture2D>("TankTitle1"), content.Load<Texture2D>("Bullet3")));
+                ManegerMonster.Add(Tank = new Enemy(poisiton, content.Load<Texture2D>("TankTile1"), content.Load<Texture2D>("Bullet3")));
                 
             }
             else
