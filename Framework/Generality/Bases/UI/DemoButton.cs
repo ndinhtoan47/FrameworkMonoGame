@@ -9,14 +9,16 @@ namespace Framework.Generality.Bases.UI
     public class DemoButton : Button
     {
         public DemoButton()
-            :base("Demo")
+            :base("")
         {
-
+            _position = new Vector2(50, 50);
+            _boundingBox.Width = 50;
+            _boundingBox.Height = 50;
         }
 
         public override void Draw(SpriteBatch sp)
         {
-            sp.Draw(_sprite, new Rectangle((int)_position.X, (int)_position.Y, _boundingBox.Width, _boundingBox.Height), Color.White);
+            sp.Draw(_sprite, new Rectangle((int)_position.X, (int)_position.Y, _boundingBox.Width, _boundingBox.Height), _color);
             base.Draw(sp);
         }
         public override void Update(float deltaTime)
