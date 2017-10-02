@@ -28,20 +28,17 @@ namespace Framework
         SpriteBatch spriteBatch;
         static public ContentManager _content;
         SceneManager sceneManager;
-        GateControl Gate;
         DemoButton button;
-        LoginScene Login;
         
         public Game1()
         {
-            Login = new LoginScene(Content);
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             graphics.PreferredBackBufferWidth = Constants.VIEWPORT_WIDTH;
             graphics.PreferredBackBufferHeight = Constants.VIEWPORT_HEIGHT;
-            Gate = new GateControl(Content);
-            button = new DemoButton();
+           
+            
         }
 
         /// <summary>
@@ -68,8 +65,8 @@ namespace Framework
         /// </summary>
         protected override void LoadContent()
         {
-            button.LoadContents(Content, "font", "Bullet3");
-            Login.LoadContents();
+           
+            sceneManager.GotoScene(Constants.SCENE_PLAY);
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
         }
@@ -93,8 +90,8 @@ namespace Framework
             Input.Update();
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             sceneManager.Update(deltaTime);
-            Gate.Updata((float)gameTime.ElapsedGameTime.TotalSeconds);
-            button.Update(deltaTime);
+            
+           
             base.Update(gameTime);
         }
 
@@ -104,13 +101,11 @@ namespace Framework
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            Login.Draw(spriteBatch);
             GraphicsDevice.Clear(Color.Green);
             sceneManager.Draw(spriteBatch);
 
             spriteBatch.Begin();
-            button.Draw(spriteBatch);
-            Gate.Draw(spriteBatch);
+           
             spriteBatch.End();
 
                

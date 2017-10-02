@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -47,6 +48,7 @@
     <Compile Include="Generality\Bases\GameScenes\PlayScene.cs" />
     <Compile Include="Generality\Bases\Map.cs" />
     <Compile Include="Generality\Bases\Network\Connection.cs" />
+    <Compile Include="Generality\Bases\Network\HandleData.cs" />
     <Compile Include="Generality\Bases\ParticleSystem\Emitter.cs" />
     <Compile Include="Generality\Bases\ParticleSystem\FadeHelper.cs" />
     <Compile Include="Generality\Bases\ParticleSystem\Particle.cs" />

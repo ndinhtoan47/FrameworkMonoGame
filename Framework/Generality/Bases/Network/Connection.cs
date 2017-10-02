@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using Sfs2X.Exceptions;
 using Sfs2X.Requests;
+using System.Collections.Generic;
 
 namespace Framework.Generality.Bases.Network
 {
@@ -18,10 +19,12 @@ namespace Framework.Generality.Bases.Network
         private int PORT;
         private string ZONE;
 
+        private List<Room> _roomList;
         public Connection()
         {
             _sfs = new SmartFox();
             _config = new ConfigData();
+            _roomList = new List<Room>();
 
             HOST = "127.0.0.1";
             PORT = 9933;
@@ -47,7 +50,7 @@ namespace Framework.Generality.Bases.Network
         }
 
         // send request
-        public void SendConnectRequest(string zoneName = "BasicExamples")
+        public void SendConnectRequest(string zoneName = "BattleTank")
         {
             try
             {
@@ -55,15 +58,44 @@ namespace Framework.Generality.Bases.Network
                 _config.Zone = ZONE;
                 _sfs.Connect(_config);
             }
-            catch(Exception exp)
+            catch (Exception exp)
             {
                 Debug.WriteLine("config error: " + exp.Message);
             }
         }
-        public void SendLoginRequest(string userName,string zoneName = "BasicExamples")
+        public void SendLoginRequest(string userName, string zoneName = "BattleTank")
         {
-            _sfs.Send(new LoginRequest(userName,"",zoneName));
+            _sfs.Send(new LoginRequest(userName, "", zoneName));
         }
+        public void SendCreateRoomRequest(string roomName)
+        {
+            RoomSettings setting = new RoomSettings(roomName);
+            setting.Name = roomName;
+            setting.MaxUsers = 4;
+            /*
+             * Parameters:
+                    id - The name of the Extension as deployed on the server; it's the name of the folder containing the Extension classes inside the main [sfs2x-install-folder]/SFS2X/extensions folder.
+                    className - The fully qualified name of the main class of the Extension.
+             */
+            setting.Extension = new RoomExtension("", "");
+            setting.IsGame = true;
+            _sfs.Send(new CreateRoomRequest(setting, true));
+        }
+        public void SendJoinRoom(string roomName)
+        {
+            _sfs.Send(new JoinRoomRequest(roomName));
+        }
+        public void SendLeaveRoom()
+        {
+            _sfs.Send(new LeaveRoomRequest());
+        }
+
+        // get properties
+        public List<Room> GetRoomList()
+        {
+            return _roomList;
+        }
+        
         private void AddListener()
         {
             _sfs.AddEventListener(SFSEvent.CONNECTION, OnConnection);
@@ -73,6 +105,8 @@ namespace Framework.Generality.Bases.Network
             _sfs.AddEventListener(SFSEvent.ROOM_JOIN, OnJoinRoom);
             _sfs.AddEventListener(SFSEvent.ROOM_JOIN_ERROR, OnJoinRoomError);
             _sfs.AddEventListener(SFSEvent.EXTENSION_RESPONSE, OnExtensionReponse);
+            _sfs.AddEventListener(SFSEvent.ROOM_ADD, OnRoomAdd);
+            _sfs.AddEventListener(SFSEvent.ROOM_REMOVE, OnRoomRemove);
         }
 
         // hanlde events
@@ -127,6 +161,23 @@ namespace Framework.Generality.Bases.Network
 
         }
         /// <summary>
+        ///  when a new Room is created inside the Zone under any of the Room Groups that the client subscribed. 
+        ///  This event is fired in response to the CreateRoomRequest and CreateSFSGameRequest requests in case the operation is executed successfully.
+        /// </summary>
+        private void OnRoomAdd(BaseEvent e)
+        {
+            Room r = (Room)e.Params["room"];
+            AddRoom(r);
+        }
+        /// <summary>
+        /// when a Room belonging to one of the Groups subscribed by the client is removed from the Zone.
+        /// </summary>
+        private void OnRoomRemove(BaseEvent e)
+        {
+            Room r = (Room)e.Params["room"];
+            RemoveRoom(r);
+        }
+        /// <summary>
         ///  when data coming from a server-side Extension is received by the current user.
         /// </summary>
         /// <param name="e">Contain all events dispatched by sfs 2x C# api</param>
@@ -134,5 +185,29 @@ namespace Framework.Generality.Bases.Network
         {
 
         }
+
+        // update room events
+        private void AddRoom(Room r)
+        {
+            if(r != null)
+            {
+                _roomList.Add(r);
+            }
+        }
+        private void RemoveRoom(Room r)
+        {
+            if(r != null)
+            {
+                _roomList.Remove(r);
+            }
+        }
+        private void UpdateRoomUsers(Room r)
+        {
+            if(r.PlayerList.Count <= 0)
+            {
+                RemoveRoom(r);
+            }
+        }
+        
     }
 }

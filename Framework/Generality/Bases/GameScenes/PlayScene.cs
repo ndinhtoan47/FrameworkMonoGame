@@ -19,6 +19,7 @@ using Framework.Generality.Bases.GameScenes;
 using System.Collections.Generic;
 using System;
 using Framework.Generality.Bases.Network;
+using Framework.Generality.ColisionDetection;
 
 namespace Framework.Generality.Bases.GameScenes
 {
@@ -34,7 +35,7 @@ namespace Framework.Generality.Bases.GameScenes
         // test smartfox
         Connection _network;
         public PlayScene(ContentManager contents) :
-            base(Constants.SCENE_PLAY,contents)
+            base(Constants.SCENE_PLAY, contents)
         {
             Gate = new GateControl(contents);
             nTank = new Tank();
@@ -63,27 +64,29 @@ namespace Framework.Generality.Bases.GameScenes
         {
             sp.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Cam.GetTransfromMatrix());
             //Gate.Draw(sp);
-            //nTank.Draw(sp);
-            //foreach(Item i in listItem)
-            //{
-            //    i.Draw(sp);
-            //}
+            Gate.Draw(sp);
+            nTank.Draw(sp);
+            foreach (Item i in listItem)
+            {
+                i.Draw(sp);
+            }
             sp.End();
         }
         public override GameManager.GameState Update(float deltaTime)
         {
             //Gate.Updata(deltaTime);
-            //nTank.Update(deltaTime);
+            nTank.Update(deltaTime);
+            
             //Cam.Update(deltaTime, nTank.POSITION);
-            //itemUpdate(deltaTime);
-
+            itemUpdate(deltaTime);
+            CheckCollision();
             // test smartfox
             _network.Update();
             return GameManager.GameState.None;
         }
         public override bool LoadContents()
         {
-            //nTank.LoadContents(_contents);
+            nTank.LoadContents(_contents);
             return true;
         }
 
@@ -112,6 +115,31 @@ namespace Framework.Generality.Bases.GameScenes
             if (randomValue == 3)
                 return itemImage = _contents.Load<Texture2D>("item2");
             else return null;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected Quadtree _quad = new Quadtree(0, new Microsoft.Xna.Framework.Rectangle(0, 0, 1000, 674));
+        protected List<Object> _tempList = new List<Object>();
+        protected void CheckCollision()
+        {
+            _quad.Clear();
+            List<Object> objCollision = new List<Object>();
+            _tempList = GameManager.GetAllObject();
+            for (int i = 0; i < _tempList.Count; i++)
+            {
+                _quad.Insert(_tempList[i]);
+            }
+            for (int i = 0; i < _tempList.Count; i++)
+            {
+                objCollision.Clear();
+                objCollision = _quad.Retrieve(objCollision, _tempList[i]);
+                for(int x  = 0; x < objCollision.Count; x++)
+                {
+                    
+                }
+            }
         }
     }
 }

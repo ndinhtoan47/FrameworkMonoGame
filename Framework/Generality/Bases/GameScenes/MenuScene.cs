@@ -66,11 +66,13 @@ namespace Framework.Generality.Bases.GameScenes
         }
         public override void Draw(SpriteBatch sp)
         {
+            sp.Begin();
             sp.Draw(backgroundMenu, new Rectangle(0, 0, 800, 600), Color.White);
             sp.Draw(playButton, new Rectangle((800 / 2) - (this.playButton.Width / 2), (300  / 2) - (this.playButton.Height / 2), playButton.Width, playButton.Height), colorPlayB);
             sp.Draw(exitButton, new Rectangle((800 / 2) - (this.exitButton.Width / 2), (450 / 2) - (this.exitButton.Height / 2), exitButton.Width, exitButton.Height), colorExitB);
             sp.Draw(soundButton, new Rectangle((800 / 2) - (this.soundButton.Width / 2), (600 / 2) - (this.soundButton.Height / 2), soundButton.Width, soundButton.Height), colorSoundB);
             sp.DrawString(font, "PLAY", new Vector2(400, 150), Color.White);
+            sp.End();
         }
         public override GameManager.GameState Update(float deltaTime)
         {
@@ -92,8 +94,8 @@ namespace Framework.Generality.Bases.GameScenes
                 if (colorPlayB.A == 0)
                     down = true;
                 if (down)
-                    colorPlayB.A += 5;
-                else colorPlayB.A -= 5; 
+                    colorPlayB.A -= 5;
+                else colorPlayB.A += 5; 
             }
             else colorPlayB.A = 255;
             if (state == menuState.exitButton)
