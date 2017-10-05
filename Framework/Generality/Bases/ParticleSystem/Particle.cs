@@ -53,19 +53,19 @@ namespace Framework.Generality.Bases.ParticleSystem
             _totalLifeTime += deltaTime;
             _fade = _fadeHelper.UpdateFade(_fade, _lifeTime, _totalLifeTime);
         }
-        public void Draw(SpriteBatch sp)
-        {
-            if (_sprite != null)
-                sp.Draw(texture:_sprite,
-                    position: null,
-                    destinationRectangle: new Rectangle((int)_position.X,(int)_position.Y,_minSize,_minSize),
-                    color: new Color(_fade, _fade, _fade, _fade),
-                    rotation: _rotation,
-                    origin: _center,
-                    scale:new Vector2(_scale,_scale),
-                    effects: SpriteEffects.None,
-                    layerDepth: 0.0f);
-        }
+        //public void Draw(SpriteBatch sp)
+        //{
+        //    if (_sprite != null)
+        //        sp.Draw(texture:_sprite,
+        //            position: null,
+        //            destinationRectangle: new Rectangle((int)_position.X,(int)_position.Y,_minSize,_minSize),
+        //            color: new Color(_fade, _fade, _fade, _fade),
+        //            rotation: _rotation,
+        //            origin: _center,
+        //            scale:new Vector2(_scale,_scale),
+        //            effects: SpriteEffects.None,
+        //            layerDepth: 0.0f);
+        //}
         // properties
         public Vector2 POSITION
         {

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Framework.Generality.OffSets;
+using Microsoft.Xna.Framework.Input;
 
 namespace Framework.Generality.Bases.UI
 {
@@ -16,23 +17,23 @@ namespace Framework.Generality.Bases.UI
         protected bool _active;
         protected Color _color;
 
-        public Button(string label)
+        public Button(Vector2 position, Rectangle boundingbox)
         {
-            _label = label;
+            
             _sprite = null;
-            _boundingBox = new Rectangle();
-            _position = Vector2.Zero;
+            _boundingBox = boundingbox;
+            _position = position;
             _active = false;
-            _color = Color.Red;
+            _color = Color.White;
         }
         public Button()
         {
             _label = "";
             _sprite = null;
             _boundingBox = new Rectangle();
-            _position = Vector2.Zero;
+        
             _active = false;
-            _color = Color.Red;
+            _color = Color.White;
         }
 
         public void Init(Vector2 position, Rectangle boundingBox)
@@ -63,23 +64,31 @@ namespace Framework.Generality.Bases.UI
             Vector2 textPos = center - size / 2;
             sp.DrawString(_font, _label, textPos, _color);
         }
-        public virtual void Update(float deltaTime)
+        public virtual void TestDraw(SpriteBatch sp)
         {
-            if (_active)
-                if (IsInside())
+            Vector2 textPos = _position + new Vector2(35, 30);
+            //if(_active==true)
+            sp.DrawString(_font, _label+"|", textPos, color: Color.Black);
+        }
+        public virtual void Update(float deltaTime, MouseState mouse)
+        {
+            //if (_active)
+                if (IsInside(mouse))
                 {
                     Hover();
                     if (InputControl.Input.Clicked(Constants.MOUSEBUTTON_LEFT))
                     {
                         Behavior();
+                       
                     }
                 }
-            else
+                else
                 {
+                  
                     Default();
                 }
         }
-
+       
         protected virtual void Behavior()
         {
             // when click
@@ -93,12 +102,20 @@ namespace Framework.Generality.Bases.UI
             // normal do nothing
         }
 
-        protected bool IsInside()
+        protected bool IsInside(MouseState mouse)
         {
-            Vector2 mousePos = InputControl.Input.GetMousePosition();
-            if (mousePos.X >= 0 && mousePos.X <= _position.X + _boundingBox.Width
-                && mousePos.Y >= 0 && mousePos.Y <= _position.Y + _boundingBox.Height)
+            
+            Rectangle rec = new Rectangle();
+            rec = _boundingBox;
+            rec.X =(int) _position.X;
+            rec.Y = (int)_position.Y;
+
+            Rectangle mousrec = new Rectangle(mouse.X, mouse.Y, 1, 1);
+
+            if(mousrec.Intersects(rec))
+           
             {
+                _color = Color.Red;
                 return true;
             }
             return false;

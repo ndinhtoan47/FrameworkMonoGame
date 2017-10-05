@@ -2,18 +2,22 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using Microsoft.Xna.Framework.Input;
 
 
 namespace Framework.Generality.Bases.UI
 {
     public class DemoButton : Button
     {
-        public DemoButton()
-            :base("")
+        protected float _timeInput;
+        protected KeyboardState _currentKey;
+        protected KeyboardState _lastKey;
+        protected Vector2 _positionCursorText;
+        public DemoButton(Vector2 position, Rectangle boundingbox)
+            :base(  position, boundingbox)
         {
-            _position = new Vector2(50, 50);
-            _boundingBox.Width = 50;
-            _boundingBox.Height = 50;
+         
+           
         }
 
         public override void Draw(SpriteBatch sp)
@@ -21,15 +25,138 @@ namespace Framework.Generality.Bases.UI
             sp.Draw(_sprite, new Rectangle((int)_position.X, (int)_position.Y, _boundingBox.Width, _boundingBox.Height), _color);
             base.Draw(sp);
         }
-        public override void Update(float deltaTime)
+        public override void TestDraw(SpriteBatch sp)
         {
-            base.Update(deltaTime);
+            
+            sp.Draw(_sprite, new Rectangle((int)_position.X, (int)_position.Y, _boundingBox.Width, _boundingBox.Height), _color);
+            base.TestDraw(sp);
+        }
+        public void ButtonDraw(SpriteBatch sp)
+        {
+            sp.Draw(_sprite, new Rectangle((int)_position.X, (int)_position.Y, _boundingBox.Width, _boundingBox.Height), _color);
+        }
+        public  void UpdateTest(float deltaTime, MouseState mouse)
+        {
+            
+                _lastKey = _currentKey;
+                _currentKey = Keyboard.GetState();
+
+
+                this.InputUserName(deltaTime, ref _label, 10);
+                this.CursorMovement(_label);
+               
+            
+            
         }
 
+        public void InputUserName(float gameTime, ref string str, int maxLength)
+        {
+            Keys[] KEY;
+            string temp = "";
+            _timeInput += gameTime;
+            //lay mang
+            KEY = _currentKey.GetPressedKeys();
+            foreach (Keys item in KEY)
+            {
+                if (_timeInput > 0.1f &&
+                    (
+                    (item >= Keys.A && item <= Keys.Z) ||
+                   
+                    (item >= Keys.D0 && item <= Keys.D9) ||
+                    (item >= Keys.NumPad0 && item <= Keys.NumPad9)
+                    ) || item == Keys.Space || item == Keys.Enter || item == Keys.Back)
+                {
+                    if (_lastKey == _currentKey)
+                    {
+                        if (_timeInput > 0.6f)
+                        {
+                            if (item == Keys.Space)
+                                temp += "";
+                            else
+                            {
+                                if (item == Keys.Back)
+                                {
+                                    if (str.Length > 0)
+                                        str = str.Remove(str.Length - 1);
+                                }
+                                else
+                                    temp += item.ToString();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (item == Keys.Space)
+                            temp += "";
+                        else
+                        {
+                            if (item == Keys.Back)
+                            {
+                                if (str.Length > 0)
+                                    str = str.Remove(str.Length - 1);
+                            }
+                            else
+                                temp += item.ToString();
+                        }
+                        _timeInput = 0;
+                    }
+                }
+            }
+          if(str== null)
+          {
+              str = "";
+          }
+            if (str.Length <= maxLength)
+                str = str + temp;
+        }
+        public bool isClick()
+        {
+            return _active;
+        }
+        public string Return()
+        {
+            return _label;
+        }
+        public void NonActive()
+        {
+            _active = false;
+        }
+        private void CursorMovement(string str)
+        {
+            // Q, W, F, M , N, L , I , J, H
+            _positionCursorText = _position;
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (str[i] == 'Q')
+                    _positionCursorText.X += 13;
+                else if (str[i] == 'W')
+                    _positionCursorText.X += 16;
+                else if (str[i] == 'M')
+                    _positionCursorText.X += 15;
+                else if (str[i] == 'F')
+                    _positionCursorText.X += 11;
+                else if (str[i] == 'N')
+                    _positionCursorText.X += 13;
+                else if (str[i] == 'I')
+                    _positionCursorText.X += 6;
+                else if (str[i] == 'J')
+                    _positionCursorText.X += 11;
+                else if (str[i] == 'H')
+                    _positionCursorText.X += 13;
+                else if (str[i] == ' ')
+                    _positionCursorText.X += 5;
+                else if (str[i] == 'G')
+                    _positionCursorText.X += 13;
+                else
+                    _positionCursorText.X += 12;
+
+            }
+
+        }
         protected override void Behavior()
         {
-            _color = Color.White;
-            _active = false;
+            //_color = Color.Blue;
+            _active = true;
             base.Behavior();
         }
         protected override void Hover()
@@ -39,7 +166,8 @@ namespace Framework.Generality.Bases.UI
         }
         protected override void Default()
         {
-            _color = Color.Red;
+            _color = Color.White;
+          
             base.Default();
         }
     }

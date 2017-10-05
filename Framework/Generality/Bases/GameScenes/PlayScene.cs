@@ -11,14 +11,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 using Framework.MainTank;
 using Framework.Generality.Bases.Camera2D;
-using Microsoft.Xna.Framework.Content;
+
 using Framework.Generality.Bases.ParticleSystem;
 using Framework.Generality.Particles;
 using Framework.Generality.Manager;
 using Framework.Generality.Bases.GameScenes;
 using System.Collections.Generic;
 using System;
-using Framework.Generality.Bases.Network;
+//using Framework.Generality.Bases.Network;
 using Framework.Generality.ColisionDetection;
 
 namespace Framework.Generality.Bases.GameScenes
@@ -33,7 +33,7 @@ namespace Framework.Generality.Bases.GameScenes
         private float delayTime = 0f;
 
         // test smartfox
-        Connection _network;
+        //Connection _network;
         public PlayScene(ContentManager contents) :
             base(Constants.SCENE_PLAY, contents)
         {
@@ -43,7 +43,7 @@ namespace Framework.Generality.Bases.GameScenes
             listItem = new List<Item>();
 
             // test smartfox
-            _network = new Connection();
+            //_network = new Connection();
         }
 
         public override bool Init()
@@ -51,8 +51,8 @@ namespace Framework.Generality.Bases.GameScenes
             _isInit = LoadContents();
 
             // test smartfox
-            _network.Init();
-            _network.SendConnectRequest();
+            //_network.Init();
+            //_network.SendConnectRequest();
             return _isInit;
         }
         public override void Shutdown()
@@ -81,7 +81,7 @@ namespace Framework.Generality.Bases.GameScenes
             itemUpdate(deltaTime);
             CheckCollision();
             // test smartfox
-            _network.Update();
+            //_network.Update();
             return GameManager.GameState.None;
         }
         public override bool LoadContents()

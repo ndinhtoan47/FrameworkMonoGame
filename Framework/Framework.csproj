@@ -91,9 +91,6 @@
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="SmartFox2X">
-      <HintPath>C:\Users\Toan\Downloads\SFS2X_API_CSharp_v1.7.5\Debug\DotNet\SmartFox2X.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
   </ItemGroup>

@@ -23,7 +23,7 @@ namespace Framework.Generality.Enemy
         protected ContentManager content;
         protected float delaytime = 0.1f;
         protected float totaledelaytiem = 0;
-        protected float a = 0;
+        protected float auto = 0;
         protected float phase = 0f;
         protected float totalPhase = 13f;
         protected int cout;
@@ -133,14 +133,14 @@ namespace Framework.Generality.Enemy
             }
             if (cout < 5)
             { UpdateGate(DeltaTime); }
-            if (a > 20)
-            {
-                ManegerMonster.RemoveAt(0);
-                cout--;
-                a = 0;
-            }
+            //if (auto > 20)
+            //{
+            //    ManegerMonster.RemoveAt(0);
+            //    cout--;
+            //    auto = 0;
+            //}
 
-            a += 1 * DeltaTime;
+            //a += 1 * DeltaTime;
         }
         public void Draw(SpriteBatch sp)
         {

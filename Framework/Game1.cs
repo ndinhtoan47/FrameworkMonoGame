@@ -52,7 +52,7 @@ namespace Framework
             _content = Content;
             sceneManager = new SceneManager(Content);
             sceneManager.Add(new PlayScene(Content));
-            sceneManager.Add(new MenuScene(Content));
+            //sceneManager.Add(new MenuScene(Content));
             sceneManager.Add(new OverScene(Content));
             sceneManager.Add(new LoginScene(Content));
             sceneManager.Init();
@@ -66,7 +66,7 @@ namespace Framework
         protected override void LoadContent()
         {
            
-            sceneManager.GotoScene(Constants.SCENE_PLAY);
+            sceneManager.GotoScene(Constants.SCENE_LOGIN);
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
         }

@@ -33,7 +33,7 @@ namespace Framework.Generality.Bases.ParticleSystem
         {
             for (int i = 0; i < _particles.Count; i++)
             {
-                _particles[i].Draw(sp);
+                //_particles[i].Draw(sp);
             }
         }
         public virtual void LoadContents(ContentManager contents) { }
