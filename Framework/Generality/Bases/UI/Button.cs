@@ -16,6 +16,8 @@ namespace Framework.Generality.Bases.UI
         protected SpriteFont _font;
         protected bool _active;
         protected Color _color;
+        protected string _invi;
+        protected string _Point ;
 
         public Button(Vector2 position, Rectangle boundingbox)
         {
@@ -67,9 +69,27 @@ namespace Framework.Generality.Bases.UI
         public virtual void TestDraw(SpriteBatch sp)
         {
             Vector2 textPos = _position + new Vector2(35, 30);
-            //if(_active==true)
+            if (_active == true)
             sp.DrawString(_font, _label+"|", textPos, color: Color.Black);
+            else
+            {
+                sp.DrawString(_font, _label, textPos, color: Color.Black);
+            }
         }
+        public virtual void InvilPass(SpriteBatch sp)
+        {
+           
+               
+               
+             
+                                    Vector2 textPos = _position + new Vector2(35, 30);
+                    if (_active == true)
+                        sp.DrawString(_font, _Point + "|", textPos, color: Color.Black);
+                    else
+                    {
+                        sp.DrawString(_font, _Point, textPos, color: Color.Black);
+                    }
+                        }
         public virtual void Update(float deltaTime, MouseState mouse)
         {
             //if (_active)

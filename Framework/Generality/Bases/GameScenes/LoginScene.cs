@@ -51,12 +51,12 @@ namespace Framework.Generality.Bases.GameScenes
             sp.Draw(BG = _contents.Load<Texture2D>("BG"),rec1,sourceRectangle:rec2, color:Color.Wheat);
             //sp.Draw(LoginBG = _contents.Load<Texture2D>("Login"), rec3, sourceRectangle: rec4, color: Color.Wheat);
             LOGIN.ButtonDraw(sp);
-           if(ID.isClick())
+           if(ID.isClick()||ID.Return()!=null)
             ID.TestDraw(sp);
            else
                ID.ButtonDraw(sp);
-           if (PASS.isClick())
-               PASS.TestDraw(sp);
+           if (PASS.isClick()||PASS.Return()!=null)
+               PASS.InvilPass(sp);
            else
                PASS.ButtonDraw(sp);
             sp.End();
@@ -65,18 +65,23 @@ namespace Framework.Generality.Bases.GameScenes
         {
             MouseState mouse;
             mouse = Mouse.GetState();
-            
-         
-            if(ID.isClick())
+
+            bool a = ID.isClick();
+            bool b = PASS.isClick();
+            if(a==true)
+
             {
-                ID.UpdateTest(deltaTime, mouse);
                 PASS.NonActive();
+                ID.UpdateTest(deltaTime, mouse);
+            
             }
-            if (PASS.isClick())
+            if (b==true)
             {
-                PASS.UpdateTest(deltaTime, mouse);
                 ID.NonActive();
+                PASS.UpdateTest(deltaTime, mouse);
+               
             }
+          
             ID.Update(deltaTime, mouse);
             LOGIN.Update(deltaTime, mouse);
             PASS.Update(deltaTime, mouse);

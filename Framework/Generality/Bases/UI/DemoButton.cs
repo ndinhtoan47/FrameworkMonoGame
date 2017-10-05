@@ -13,6 +13,7 @@ namespace Framework.Generality.Bases.UI
         protected KeyboardState _currentKey;
         protected KeyboardState _lastKey;
         protected Vector2 _positionCursorText;
+        protected int Numbertest = 8;
         public DemoButton(Vector2 position, Rectangle boundingbox)
             :base(  position, boundingbox)
         {
@@ -31,6 +32,11 @@ namespace Framework.Generality.Bases.UI
             sp.Draw(_sprite, new Rectangle((int)_position.X, (int)_position.Y, _boundingBox.Width, _boundingBox.Height), _color);
             base.TestDraw(sp);
         }
+        public override void InvilPass(SpriteBatch sp)
+        {
+            sp.Draw(_sprite, new Rectangle((int)_position.X, (int)_position.Y, _boundingBox.Width, _boundingBox.Height), _color);
+            base.InvilPass(sp);
+        }
         public void ButtonDraw(SpriteBatch sp)
         {
             sp.Draw(_sprite, new Rectangle((int)_position.X, (int)_position.Y, _boundingBox.Width, _boundingBox.Height), _color);
@@ -42,17 +48,19 @@ namespace Framework.Generality.Bases.UI
                 _currentKey = Keyboard.GetState();
 
 
-                this.InputUserName(deltaTime, ref _label, 10);
+                this.InputUserName(deltaTime, ref _label, Numbertest);
                 this.CursorMovement(_label);
                
             
             
         }
 
+
         public void InputUserName(float gameTime, ref string str, int maxLength)
         {
             Keys[] KEY;
             string temp = "";
+            string tep = "";
             _timeInput += gameTime;
             //lay mang
             KEY = _currentKey.GetPressedKeys();
@@ -61,7 +69,7 @@ namespace Framework.Generality.Bases.UI
                 if (_timeInput > 0.1f &&
                     (
                     (item >= Keys.A && item <= Keys.Z) ||
-                   
+
                     (item >= Keys.D0 && item <= Keys.D9) ||
                     (item >= Keys.NumPad0 && item <= Keys.NumPad9)
                     ) || item == Keys.Space || item == Keys.Enter || item == Keys.Back)
@@ -71,43 +79,65 @@ namespace Framework.Generality.Bases.UI
                         if (_timeInput > 0.6f)
                         {
                             if (item == Keys.Space)
+                            {
                                 temp += "";
+                                tep += "*";
+                            }
                             else
                             {
                                 if (item == Keys.Back)
                                 {
                                     if (str.Length > 0)
+                                    {
                                         str = str.Remove(str.Length - 1);
+                                        _Point = _Point.Remove(_Point.Length - 1);
+                                    }
                                 }
                                 else
+                                {
                                     temp += item.ToString();
+                                    tep += "*";
+                                }
                             }
                         }
                     }
                     else
                     {
                         if (item == Keys.Space)
+                        {
                             temp += "";
+                            tep += "*";
+                        }
                         else
                         {
                             if (item == Keys.Back)
                             {
                                 if (str.Length > 0)
+                                {
                                     str = str.Remove(str.Length - 1);
+                                    _Point = _Point.Remove(_Point.Length - 1);
+                                }
                             }
                             else
+                            {
                                 temp += item.ToString();
+                                tep += "*";
+                            }
                         }
                         _timeInput = 0;
                     }
                 }
             }
-          if(str== null)
-          {
-              str = "";
-          }
+            if (str == null)
+            {
+                str = "";
+                _Point = "";
+            }
             if (str.Length <= maxLength)
+            {
                 str = str + temp;
+                _Point = _Point+tep;
+            }
         }
         public bool isClick()
         {
