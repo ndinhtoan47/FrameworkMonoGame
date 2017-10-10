@@ -14,10 +14,11 @@ namespace Framework.Generality.Bases.UI
         protected KeyboardState _lastKey;
         protected Vector2 _positionCursorText;
         protected int Numbertest = 8;
+      
         public DemoButton(Vector2 position, Rectangle boundingbox)
             :base(  position, boundingbox)
         {
-         
+          
            
         }
 
@@ -143,13 +144,27 @@ namespace Framework.Generality.Bases.UI
         {
             return _active;
         }
+        public void IsClickUp(MouseState mouse)
+        {
+
+
+            if (NonActive()&&IsInside(mouse))
+            {
+                if (InputControl.Input.Clicked(Constants.MOUSEBUTTON_LEFT))
+                {
+                    _NonActive = true;
+
+                }
+
+            }
+        }
         public string Return()
         {
             return _label;
         }
-        public void NonActive()
+        public bool NonActive()
         {
-            _active = false;
+            return _NonActive;
         }
         private void CursorMovement(string str)
         {
@@ -183,10 +198,15 @@ namespace Framework.Generality.Bases.UI
             }
 
         }
+        public int Num()
+        {
+            return _NumOfClick;
+        }
         protected override void Behavior()
         {
             //_color = Color.Blue;
             _active = true;
+            _NonActive = true;
             base.Behavior();
         }
         protected override void Hover()
@@ -200,5 +220,7 @@ namespace Framework.Generality.Bases.UI
           
             base.Default();
         }
+
+        public bool _NonActive { get; set; }
     }
 }

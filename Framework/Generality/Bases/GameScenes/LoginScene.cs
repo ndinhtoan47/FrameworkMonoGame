@@ -14,8 +14,7 @@ namespace Framework.Generality.Bases.GameScenes
         protected Texture2D LoginBG;
         protected Rectangle rec1;
         protected Rectangle rec2;
-        protected Rectangle rec3;
-        protected Rectangle rec4;
+        
         protected DemoButton ID;
         protected DemoButton PASS;
         protected DemoButton LOGIN;
@@ -28,8 +27,7 @@ namespace Framework.Generality.Bases.GameScenes
             _contents = contents;
             rec1 = new Rectangle(0, 0, 800, 600);
             rec2 = new Rectangle(0, 0, 1280, 720);
-            //rec3 = new Rectangle(300, 100, 200, 50);
-            //rec4 = new Rectangle(0, 0, 518, 109);
+           
             ID = new DemoButton( new Vector2(150, 250), new Rectangle(0, 0, 150, 50));
             PASS = new DemoButton(new Vector2(300, 250), new Rectangle(0, 0, 150, 50));
             LOGIN = new DemoButton(new Vector2(450, 250), new Rectangle(0, 0, 150, 50));
@@ -72,12 +70,14 @@ namespace Framework.Generality.Bases.GameScenes
 
             {
                 PASS.NonActive();
+                LOGIN.NonActive();
                 ID.UpdateTest(deltaTime, mouse);
             
             }
             if (b==true)
             {
                 ID.NonActive();
+                LOGIN.NonActive();
                 PASS.UpdateTest(deltaTime, mouse);
                
             }
@@ -85,6 +85,11 @@ namespace Framework.Generality.Bases.GameScenes
             ID.Update(deltaTime, mouse);
             LOGIN.Update(deltaTime, mouse);
             PASS.Update(deltaTime, mouse);
+            if (LOGIN.isClick())
+                if (ID.Return() != null && PASS.Return() != null && ID.Return() != "|" && PASS.Return() != "|")
+                {
+                    Game1.sceneManager.GotoScene(Constants.SCENE_MENU);
+                }
             //if (Keyboard.GetState().IsKeyDown(Keys.Enter) && prekey.IsKeyUp(Keys.Enter))
             //{
             //    if (name.Length > 3)

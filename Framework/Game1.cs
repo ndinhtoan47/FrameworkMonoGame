@@ -27,7 +27,7 @@ namespace Framework
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         static public ContentManager _content;
-        SceneManager sceneManager;
+      public static  SceneManager sceneManager;
         DemoButton button;
         
         public Game1()
@@ -52,7 +52,7 @@ namespace Framework
             _content = Content;
             sceneManager = new SceneManager(Content);
             sceneManager.Add(new PlayScene(Content));
-            //sceneManager.Add(new MenuScene(Content));
+            sceneManager.Add(new MenuScene(Content));
             sceneManager.Add(new OverScene(Content));
             sceneManager.Add(new LoginScene(Content));
             sceneManager.Init();

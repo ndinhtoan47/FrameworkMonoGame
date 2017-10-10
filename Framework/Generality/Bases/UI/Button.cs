@@ -18,6 +18,8 @@ namespace Framework.Generality.Bases.UI
         protected Color _color;
         protected string _invi;
         protected string _Point ;
+        protected bool _NonACtive;
+        protected int _NumOfClick=1;
 
         public Button(Vector2 position, Rectangle boundingbox)
         {
@@ -99,6 +101,7 @@ namespace Framework.Generality.Bases.UI
                     if (InputControl.Input.Clicked(Constants.MOUSEBUTTON_LEFT))
                     {
                         Behavior();
+                        _NumOfClick++;
                        
                     }
                 }
@@ -107,6 +110,7 @@ namespace Framework.Generality.Bases.UI
                   
                     Default();
                 }
+           
         }
        
         protected virtual void Behavior()

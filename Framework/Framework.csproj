@@ -57,6 +57,7 @@
     <Compile Include="Generality\Bases\SpriteHelpers.cs" />
     <Compile Include="Generality\Bases\UI\Button.cs" />
     <Compile Include="Generality\Bases\UI\DemoButton.cs" />
+    <Compile Include="Generality\Bases\UI\Number.cs" />
     <Compile Include="Generality\ColisionDetection\Collision.cs" />
     <Compile Include="Generality\ColisionDetection\QuadTree.cs" />
     <Compile Include="Generality\Enemy\Enemy.cs" />
