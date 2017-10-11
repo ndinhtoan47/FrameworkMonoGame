@@ -49,7 +49,7 @@ namespace Framework.Generality.Bases.GameScenes
             sp.Draw(BG = _contents.Load<Texture2D>("BG"),rec1,sourceRectangle:rec2, color:Color.Wheat);
             //sp.Draw(LoginBG = _contents.Load<Texture2D>("Login"), rec3, sourceRectangle: rec4, color: Color.Wheat);
             LOGIN.ButtonDraw(sp);
-           if(ID.isClick()||ID.Return()!=null)
+            if (ID.isClick() || ID.Return() != null)
             ID.TestDraw(sp);
            else
                ID.ButtonDraw(sp);
@@ -86,20 +86,11 @@ namespace Framework.Generality.Bases.GameScenes
             LOGIN.Update(deltaTime, mouse);
             PASS.Update(deltaTime, mouse);
             if (LOGIN.isClick())
-                if (ID.Return() != null && PASS.Return() != null && ID.Return() != "|" && PASS.Return() != "|")
+                if (ID.Return().Length > 0 && PASS.Return().Length > 0 && ID.Return() != "|" && PASS.Return() != "|")
                 {
                     Game1.sceneManager.GotoScene(Constants.SCENE_MENU);
                 }
-            //if (Keyboard.GetState().IsKeyDown(Keys.Enter) && prekey.IsKeyUp(Keys.Enter))
-            //{
-            //    if (name.Length > 3)
-            //    {
-            //        f_name = name;
-            //    }
-            //}
-
-            //prekey = Keyboard.GetState();
-            //GetKey();
+     
             return GameManager.GameState.None;
         }
         public override bool LoadContents()

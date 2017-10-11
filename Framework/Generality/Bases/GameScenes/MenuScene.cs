@@ -87,7 +87,7 @@ namespace Framework.Generality.Bases.GameScenes
             mouse = Mouse.GetState();
             Numlv.UPdata((int)Lv);
             Battlebutton.Update(deltaTime, mouse);
-            Battlebutton.IsClickUp(mouse);
+            //Battlebutton.IsClickUp(mouse);
             SoloButton.Update(deltaTime, mouse);
             CustumeButton.Update(deltaTime, mouse);
             Exit.Update(deltaTime, mouse);
@@ -114,7 +114,7 @@ namespace Framework.Generality.Bases.GameScenes
         }
         public void ExpUp(float deltatime)
         {
-            Exp.X +=50000* deltatime;
+            //Exp.X +=50000* deltatime;
            
             if(Exp.X>Exp.Y)
             {

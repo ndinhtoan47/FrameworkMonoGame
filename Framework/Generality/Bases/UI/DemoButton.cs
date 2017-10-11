@@ -144,26 +144,15 @@ namespace Framework.Generality.Bases.UI
         {
             return _active;
         }
-        public void IsClickUp(MouseState mouse)
-        {
-
-
-            if (NonActive()&&IsInside(mouse))
-            {
-                if (InputControl.Input.Clicked(Constants.MOUSEBUTTON_LEFT))
-                {
-                    _NonActive = true;
-
-                }
-
-            }
-        }
+     
         public string Return()
         {
             return _label;
         }
         public bool NonActive()
+            
         {
+            _active = false;
             return _NonActive;
         }
         private void CursorMovement(string str)
@@ -206,7 +195,7 @@ namespace Framework.Generality.Bases.UI
         {
             //_color = Color.Blue;
             _active = true;
-            _NonActive = true;
+            _NonActive = false;
             base.Behavior();
         }
         protected override void Hover()
